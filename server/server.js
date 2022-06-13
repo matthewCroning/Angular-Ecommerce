@@ -4,12 +4,14 @@ const express       = require("express"),
       mongoose      = require("mongoose"),
       User        = require("./models/user");
 
-const authRoutes = require("./routes/auth");  
+const authRoutes = require("./routes/auth");
+const productRoutes = require("./routes/product");
 
 const PORT = process.env.PORT || '3001';
 
 app.use(bodyParser.json());
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes),
+app.use("/api/product", productRoutes);
 
 app.listen(PORT, function(){
 });
