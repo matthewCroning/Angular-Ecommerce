@@ -1,4 +1,6 @@
+import { ProductService } from './../../shared/services/product.service';
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'puppeteer';
 
 @Component({
   selector: 'app-list-products',
@@ -9,7 +11,11 @@ export class ListProductsComponent implements OnInit {
 
   products!: any[];
   
-  constructor() { }
+  constructor(private ProductService: ProductService) { 
+    this.ProductService.findAll().subscribe((products: any) => {
+      this.products = products;
+    })
+  }
 
   ngOnInit(): void {
   }

@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { 
     path: '',
-    component: ListProductsComponent,
+    loadChildren: () => import('./product/product.module').then(mod => mod.ProductModule),
     pathMatch: 'full',
   },
   {
@@ -17,6 +17,10 @@ const routes: Routes = [
   { 
     path: 'auth', 
     loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule)
+  },
+  { 
+    path: 'product', 
+    loadChildren: () => import('./product/product.module').then(mod => mod.ProductModule)
   },
 ];
 

@@ -1,4 +1,7 @@
+import { Product } from 'puppeteer';
+import { ProductService } from './../../shared/services/product.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-product',
@@ -7,7 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewProductComponent implements OnInit {
 
-  constructor() { }
+  product!: any;
+
+  constructor(private ProductService: ProductService, private route: ActivatedRoute) {
+    this.ProductService.findProductById(this.route.snapshot.paramMap.get('productId')).subscribe((product: any) => {
+      this.product = product;
+    })
+  }
 
   ngOnInit(): void {
   }

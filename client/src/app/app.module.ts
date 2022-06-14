@@ -11,14 +11,14 @@ import { ListProductsComponent } from './product/list-products/list-products.com
 import { ViewProductComponent } from './product/view-product/view-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateProductComponent } from './admin/create-product/create-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CartComponent,
-    ListProductsComponent,
-    ViewProductComponent
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,

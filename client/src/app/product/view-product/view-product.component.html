@@ -1,1 +1,18 @@
-<p>view-product works!</p>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <img src={{product.imageUrl}} class="img-fluid" alt="..."> 
+        </div>
+        <div class="col-3">
+            <h5> {{product.name}} </h5>
+            <p> {{product.description}} </p>
+        </div>
+        <div class="col-3">
+            <h5> {{product.price  | currency:'AUD'}} </h5>
+            <button class="btn btn-outline-dark" [disabled]="product.stockAmount === 0 " [innerText]="product.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'">
+            </button>
+            
+        </div>
+    </div>
+</div>
