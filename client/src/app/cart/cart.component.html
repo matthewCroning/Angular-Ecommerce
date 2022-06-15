@@ -1,1 +1,3 @@
-<p>cart works!</p>
+<ng-container *ngFor="let item of CartService.getCartMap() | keyvalue">
+    {{ ProductService.findProductById(item.key) | async}} - {{item.value}}
+</ng-container>

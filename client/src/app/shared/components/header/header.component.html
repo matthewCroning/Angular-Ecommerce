@@ -10,7 +10,7 @@
              <a class="nav-link" *ngIf="AuthService.isAuthenticated()" aria-current="page" (click)="AuthService.logout()">Logout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="cart">Cart</a>
+            <a class="nav-link" aria-current="page" routerLink="cart">Cart {{CartService. getCartItemsAmount()}}</a>
           </li>
           <li class="nav-item" *ngIf="!AuthService.isAuthenticated()">
             <a class="nav-link" routerLink="/auth/login">Login</a>

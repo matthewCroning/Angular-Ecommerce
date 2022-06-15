@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public AuthService: AuthService) { }
+  constructor(public AuthService: AuthService, public CartService: CartService) { }
 
   ngOnInit(): void {
   }
