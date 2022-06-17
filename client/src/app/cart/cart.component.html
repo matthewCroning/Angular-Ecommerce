@@ -1,3 +1,36 @@
-<ng-container *ngFor="let item of CartService.getCartMap() | keyvalue">
-    {{ ProductService.findProductById(item.key) | async}} - {{item.value}}
-</ng-container>
+<div class="container" *ngIf="CartService.getCartItemsAmount() > 0">
+    <div class="row">
+        <div class="col-12">
+            <h5>
+                Total Products in Cart: {{ CartService.getCartItemsAmount() }} 
+            </h5>
+            <h5>
+                Total Price: {{ CartService.getCartTotalPrice() | currency:'AUD' }} 
+            </h5>
+        </div>
+    </div>
+   
+        <br>
+
+<ng-container *ngFor="let mapItem of CartService.getCartMap() | keyvalue">
+    <div class="row">
+        <div class="col-2">
+            <img src={{mapItem.value.item.imageUrl}} class="img-fluid" alt="..."> 
+        </div>
+        <div class="col-9">
+            <p>Product: {{ mapItem.value.item.name}}</p>
+            <p>Amount: {{ mapItem.value.amount }}</p>
+            <p>Price: {{mapItem.value.item.price | currency:'AUD'}} </p> 
+        </div>
+    </div>
+    
+</ng-container>    
+</div>
+
+<div class="container" *ngIf="CartService.getCartItemsAmount() === 0">
+    <div class="row">
+        <div class="col-12">
+            <h5> Cart is Empty </h5>
+        </div>
+    </div>
+</div>

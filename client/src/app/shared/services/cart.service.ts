@@ -5,24 +5,32 @@ import { Injectable } from '@angular/core';
 })
 export class CartService {
 
-  cart = new Map<string, number>();
+  cart = new Map<string, any>();
   
   constructor() { }
 
-  addToCart(id: any){
+  addToCart(id: any, item: any){
     if(this.cart.has(id)){
-      this.cart.set(id, this.cart.get(id)! + 1);
+      this.cart.set(id, {amount: this.cart.get(id).amount! + 1, item: item});
     } else {
-      this.cart.set(id, 1);
+      this.cart.set(id, {amount: 1, item: item});
     }
   }
 
   getCartItemsAmount(){
     var amount = 0;
-    this.cart.forEach((value: number, key: string) => {
-      amount =+ value;
+    this.cart.forEach((value: any, key: string) => {
+      amount =+ value.amount;
     });
     return amount;
+  }
+
+  getCartTotalPrice(){
+    var totalPrice = 0;
+    this.cart.forEach((value: any, key: string) => {
+      totalPrice =+ (value.amount * value.item.price);
+    });
+    return totalPrice;
   }
 
   getCartMap(){

@@ -10,7 +10,7 @@
         </div>
         <div class="col-3">
             <h5> {{product.price  | currency:'AUD'}} </h5>
-            <button class="btn btn-outline-dark" [disabled]="product.stockAmount === 0 " [innerText]="product.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'" (click)="CartService.addToCart(product._id)">
+            <button class="btn btn-outline-dark" [disabled]="product.stockAmount === 0 " [innerText]="product.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'" (click)="CartService.addToCart(product._id, product)">
             </button>
             
         </div>
