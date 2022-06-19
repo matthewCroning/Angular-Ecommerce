@@ -12,12 +12,14 @@ import { ViewProductComponent } from './product/view-product/view-product.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
+import { CartDeliveryInformationComponent } from './cart/cart-delivery-information/cart-delivery-information.component';
+import { CartShippingComponent } from './cart/cart-shipping/cart-shipping.component';
+import { CartPaymentComponent } from './cart/cart-payment/cart-payment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    CartComponent,
     CreateProductComponent
   ],
   imports: [

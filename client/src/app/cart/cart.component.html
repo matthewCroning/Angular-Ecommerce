@@ -18,9 +18,20 @@
             <img src={{mapItem.value.item.imageUrl}} class="img-fluid" alt="..."> 
         </div>
         <div class="col-9">
-            <p>Product: {{ mapItem.value.item.name}}</p>
-            <p>Amount: {{ mapItem.value.amount }}</p>
+            Product: <a routerLink="/product/view/{{mapItem.value.item._id}}">{{ mapItem.value.item.name}}</a>
+            <p>
+            Amount:
+            <button class="btn btn-sm btn-outline-dark" (click)="CartService.reduceFromCart(mapItem.value.item._id)">-</button>
+            {{ mapItem.value.amount }}
+            <button class="btn btn-sm btn-outline-dark" (click)="CartService.addToCart(mapItem.value.item._id, mapItem.value.item)">+</button>
+            </p>
             <p>Price: {{mapItem.value.item.price | currency:'AUD'}} </p> 
+            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart(mapItem.value.item._id)">remove</button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col offset-md-11">
+            <button class="btn btn-outline-dark btn-lg" routerLink="/cart/delivery">Checkout</button>
         </div>
     </div>
     

@@ -11,8 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'cart',
-    component: CartComponent,
-    pathMatch: 'full',
+    loadChildren: () => import('./cart/cart.module').then(mod => mod.CartModule)
   },
   { 
     path: 'auth', 
