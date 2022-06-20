@@ -1,67 +1,76 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-12">
-            {{ UserDetailsService.userDetailsForm.controls['email'].value}}
-            <form>
+            <form [formGroup]="deliveryDetailsForm">
                 <h5> Contact Information </h5>
                 <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="username">
-                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                  <label for="exampleInputEmail1" class="form-label">Email address*</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email" [class.is-invalid]="deliveryDetailsForm.get('email')!.invalid && deliveryDetailsForm.get('email')!.touched">
+                  <small *ngIf="deliveryDetailsForm.get('email')!.invalid && deliveryDetailsForm.get('email')!.touched" class="text-danger">{{returnError(deliveryDetailsForm.get('email'))}}</small>
                 </div>
                 <h5> Shipping Address </h5>
 
                 <div class="row">
                     <div class="col-6">
-                        <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName">
+                        <label for="firstName" class="form-label">First Name*</label>
+                        <input type="text" class="form-control" id="firstName" formControlName="firstName" [class.is-invalid]="deliveryDetailsForm.get('firstName')!.invalid && deliveryDetailsForm.get('firstName')!.touched"> 
+                        <small *ngIf="deliveryDetailsForm.get('firstName')!.invalid && deliveryDetailsForm.get('firstName')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('firstName')) }}</small>
                     </div>
                     <div class="col-6">
-                        <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName">
+                        <label for="lastName" class="form-label">Last Name*</label>
+                        <input type="text" class="form-control" id="lastName" formControlName="lastName" [class.is-invalid]="deliveryDetailsForm.get('lastName')!.invalid && deliveryDetailsForm.get('lastName')!.touched">
+                        <small *ngIf="deliveryDetailsForm.get('lastName')!.invalid && deliveryDetailsForm.get('lastName')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('lastName')) }}</small>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
                         <label for="company" class="form-label">Company</label>
-                        <input type="text" class="form-control" id="company">
+                        <input type="text" class="form-control" id="company" formControlName="company">
+                    </div>
+                </div>
+
+                <div formGroupName="address">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address*</label>
+                            <input type="text" class="form-control" id="address" formControlName="address" [class.is-invalid]="deliveryDetailsForm.get('address.address')!.invalid && deliveryDetailsForm.get('address.address')!.touched">
+                            <small *ngIf="deliveryDetailsForm.get('address.address')!.invalid && deliveryDetailsForm.get('address.address')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('address.address')) }}</small>
+                   
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="apartment" class="form-label">Apartment, suite, etc.</label>
+                            <input type="text" class="form-control" id="apartment">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="suburb" class="form-label" >Suburb*</label>
+                            <input type="text" class="form-control" id="suburb"  formControlName="suburb" [class.is-invalid]="deliveryDetailsForm.get('address.suburb')!.invalid && deliveryDetailsForm.get('address.suburb')!.touched">
+                            <small *ngIf="deliveryDetailsForm.get('address.subrub')!.invalid && deliveryDetailsForm.get('address.suburb')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('address.suburb')) }}</small>
+                   
+                        </div>
+                        <div class="col-4">
+                            <label for="state" class="form-label">State/Territory*</label>
+                            <input type="text" class="form-control" id="state">
+                        </div>
+                        <div class="col-4">
+                            <label for="postCode" class="form-label">Postcode*</label>
+                            <input type="number" class="form-control" id="postCode">
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <label for="apartment" class="form-label">Apartment, suite, etc.</label>
-                        <input type="text" class="form-control" id="apartment">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-4">
-                        <label for="suburb" class="form-label">Suburb</label>
-                        <input type="text" class="form-control" id="suburb">
-                    </div>
-                    <div class="col-4">
-                        <label for="state" class="form-label">State/Territory</label>
-                        <input type="text" class="form-control" id="state">
-                    </div>
-                    <div class="col-4">
-                        <label for="postCode" class="form-label">Postcode</label>
-                        <input type="number" class="form-control" id="postCode">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone">
+                        <label for="phone" class="form-label">Phone*</label>
+                        <input type="text" class="form-control" id="phone" formControlName="phone" [class.is-invalid]="deliveryDetailsForm.get('phone')!.invalid && deliveryDetailsForm.get('phone')!.touched">
+                        <small *ngIf="deliveryDetailsForm.get('phone')!.invalid && deliveryDetailsForm.get('phone')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('phone')) }}</small>
+                  
                     </div>
                 </div>
 

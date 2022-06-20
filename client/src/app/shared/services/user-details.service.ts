@@ -1,26 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDetailsService {
 
-  public userDetailsForm = this.fb.group({
-    email: ['hammer'],
-    firstName: [''],
-    lastName: [''],
-    company: [''],
-    address: this.fb.group({
-      address: [''],
-      suburb: [''],
-      apartment: [''],
-      state: [''],
-      postcode: ['']
-    }),
-    phone: ['']
-  });
-
+  public userDetailsForm!: FormGroup;
   
   public shippingDetailsForm = this.fb.group({
     shipping: [''],
@@ -40,5 +26,23 @@ export class UserDetailsService {
   });
 
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    this.userDetailsForm = new FormGroup({
+      firstName: new FormControl(),
+      email: new FormControl()
+     }); 
+
+    //  email: ['hammer'],
+    // firstName: [''],
+    // lastName: [''],
+    // company: [''],
+    // address: this.fb.group({
+    //   address: [''],
+    //   suburb: [''],
+    //   apartment: [''],
+    //   state: [''],
+    //   postcode: ['']
+    // }),
+    // phone: ['']
+   }
 }
