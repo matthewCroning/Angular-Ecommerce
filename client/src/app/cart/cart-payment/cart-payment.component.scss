@@ -1,0 +1,29 @@
+.item {
+    position:relative;
+    padding-top:20px;
+    display:inline-block;
+}
+.notify-badge{
+    position: absolute;
+    right:-15px;
+    top:10px;
+    background: rgb(220,53,69);
+    text-align: center;
+    border-radius: 50rem!important;
+    color:white;
+    padding: 0.35em 0.65em;
+    font-size: .75em;
+    font-weight: 700;
+}
+
+// position: absolute;
+// right:-15px;
+// top:10px;
+// background: rgb(220,53,69);
+// text-align: center;
+// border-radius: 0.25rem;
+// color:white;
+// padding: 0.35em 0.65em;
+// font-size: .75em;
+// font-weight: 700;
+ 

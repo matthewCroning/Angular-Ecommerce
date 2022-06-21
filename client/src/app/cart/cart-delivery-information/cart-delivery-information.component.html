@@ -1,82 +1,101 @@
-<div class="container mt-3">
+<div [@enterSlideLeft] class="container mt-3">
     <div class="row">
         <div class="col-12">
             <form [formGroup]="deliveryDetailsForm">
                 <h5> Contact Information </h5>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email address*</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email" [class.is-invalid]="deliveryDetailsForm.get('email')!.invalid && deliveryDetailsForm.get('email')!.touched">
-                  <small *ngIf="deliveryDetailsForm.get('email')!.invalid && deliveryDetailsForm.get('email')!.touched" class="text-danger">{{returnError(deliveryDetailsForm.get('email'))}}</small>
+             
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" formControlName="email" [class.is-invalid]="deliveryDetailsForm.get('email')!.invalid && deliveryDetailsForm.get('email')!.touched">
+                    <label for="emailInput">Email address</label>
+                    <small *ngIf="deliveryDetailsForm.get('email')!.invalid && deliveryDetailsForm.get('email')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(deliveryDetailsForm.get('email'))}}</small>
                 </div>
                 <h5> Shipping Address </h5>
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-6">
-                        <label for="firstName" class="form-label">First Name*</label>
-                        <input type="text" class="form-control" id="firstName" formControlName="firstName" [class.is-invalid]="deliveryDetailsForm.get('firstName')!.invalid && deliveryDetailsForm.get('firstName')!.touched"> 
-                        <small *ngIf="deliveryDetailsForm.get('firstName')!.invalid && deliveryDetailsForm.get('firstName')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('firstName')) }}</small>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName" [class.is-invalid]="deliveryDetailsForm.get('firstName')!.invalid && deliveryDetailsForm.get('firstName')!.touched"> 
+                            <label for="firstName">First Name*</label>
+                            <small *ngIf="deliveryDetailsForm.get('firstName')!.invalid && deliveryDetailsForm.get('firstName')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(deliveryDetailsForm.get('firstName')) }}</small>
+                        </div>
                     </div>
                     <div class="col-6">
-                        <label for="lastName" class="form-label">Last Name*</label>
-                        <input type="text" class="form-control" id="lastName" formControlName="lastName" [class.is-invalid]="deliveryDetailsForm.get('lastName')!.invalid && deliveryDetailsForm.get('lastName')!.touched">
-                        <small *ngIf="deliveryDetailsForm.get('lastName')!.invalid && deliveryDetailsForm.get('lastName')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('lastName')) }}</small>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName" [class.is-invalid]="deliveryDetailsForm.get('lastName')!.invalid && deliveryDetailsForm.get('lastName')!.touched">
+                            <label for="lastName">Last Name*</label>
+                            <small *ngIf="deliveryDetailsForm.get('lastName')!.invalid && deliveryDetailsForm.get('lastName')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(deliveryDetailsForm.get('lastName')) }}</small>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-12">
-                        <label for="company" class="form-label">Company</label>
-                        <input type="text" class="form-control" id="company" formControlName="company">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="company" placeholder="company" formControlName="company">
+                            <label for="company">Company</label>
+                        </div>
                     </div>
                 </div>
 
                 <div formGroupName="address">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-12">
-                            <label for="address" class="form-label">Address*</label>
-                            <input type="text" class="form-control" id="address" formControlName="address" [class.is-invalid]="deliveryDetailsForm.get('address.address')!.invalid && deliveryDetailsForm.get('address.address')!.touched">
-                            <small *ngIf="deliveryDetailsForm.get('address.address')!.invalid && deliveryDetailsForm.get('address.address')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('address.address')) }}</small>
-                   
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="address" formControlName="address" placeholder="33 way lane" [class.is-invalid]="(deliveryDetailsForm.get('address')!).get('address')!.invalid && (deliveryDetailsForm.get('address')!).get('address')!.touched">
+                                <label for="address">Address*</label>
+                                <small *ngIf="(deliveryDetailsForm.get('address')!).get('address')!.invalid && (deliveryDetailsForm.get('address')!).get('address')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError((deliveryDetailsForm.get('address')!).get('address')) }}</small>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-12">
-                            <label for="apartment" class="form-label">Apartment, suite, etc.</label>
-                            <input type="text" class="form-control" id="apartment">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="3" id="apartment" formControlName="apartment">
+                                <label for="apartment" class="form-label" >Apartment, suite, etc.</label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-4">
-                            <label for="suburb" class="form-label" >Suburb*</label>
-                            <input type="text" class="form-control" id="suburb"  formControlName="suburb" [class.is-invalid]="deliveryDetailsForm.get('address.suburb')!.invalid && deliveryDetailsForm.get('address.suburb')!.touched">
-                            <small *ngIf="deliveryDetailsForm.get('address.subrub')!.invalid && deliveryDetailsForm.get('address.suburb')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('address.suburb')) }}</small>
-                   
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="suburb" formControlName="suburb" placeholder="suburb" [class.is-invalid]="(deliveryDetailsForm.get('address')!).get('suburb')!.invalid && (deliveryDetailsForm.get('address')!).get('suburb')!.touched">
+                                <label for="suburb">Suburb*</label>
+                                <small *ngIf="(deliveryDetailsForm.get('address')!).get('suburb')!.invalid && (deliveryDetailsForm.get('address')!).get('suburb')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError((deliveryDetailsForm.get('address')!).get('suburb')) }}</small>
+                            </div>
                         </div>
                         <div class="col-4">
-                            <label for="state" class="form-label">State/Territory*</label>
-                            <input type="text" class="form-control" id="state">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="state" formControlName="state" placeholder="state" [class.is-invalid]="(deliveryDetailsForm.get('address')!).get('state')!.invalid && (deliveryDetailsForm.get('address')!).get('state')!.touched">
+                                <label for="state" >State/Territory*</label>
+                                <small *ngIf="(deliveryDetailsForm.get('address')!).get('state')!.invalid && (deliveryDetailsForm.get('address')!).get('state')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError((deliveryDetailsForm.get('address')!).get('state')) }}</small>
+                            </div>
                         </div>
                         <div class="col-4">
-                            <label for="postCode" class="form-label">Postcode*</label>
-                            <input type="number" class="form-control" id="postCode">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="postcode" formControlName="postcode" placeholder="postcode" [class.is-invalid]="(deliveryDetailsForm.get('address')!).get('postcode')!.invalid && (deliveryDetailsForm.get('address')!).get('postcode')!.touched">
+                                <label for="postcode">Postcode*</label>
+                                <small *ngIf="(deliveryDetailsForm.get('address')!).get('postcode')!.invalid && (deliveryDetailsForm.get('address')!).get('postcode')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError((deliveryDetailsForm.get('address')!).get('postcode')) }}</small>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-12">
-                        <label for="phone" class="form-label">Phone*</label>
-                        <input type="text" class="form-control" id="phone" formControlName="phone" [class.is-invalid]="deliveryDetailsForm.get('phone')!.invalid && deliveryDetailsForm.get('phone')!.touched">
-                        <small *ngIf="deliveryDetailsForm.get('phone')!.invalid && deliveryDetailsForm.get('phone')!.touched" class="text-danger">{{ returnError(deliveryDetailsForm.get('phone')) }}</small>
-                  
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="phone" [class.is-invalid]="deliveryDetailsForm.get('phone')!.invalid && deliveryDetailsForm.get('phone')!.touched">
+                            <label for="phone">Phone*</label>
+                            <small *ngIf="deliveryDetailsForm.get('phone')!.invalid && deliveryDetailsForm.get('phone')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(deliveryDetailsForm.get('phone')) }}</small>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row mt-3 justify-content-end">
-                    <div class="col-4">
-                        <button class="btn btn-outline-dark btn-lg" routerLink="/cart/shipping">Continue to Shipping</button>
+                <div class="row mt-3">
+                    <div class="col">
+                        <!-- [disabled]="!deliveryDetailsForm.valid" -->
+                        <button class="btn btn-outline-dark btn-lg" routerLink="/cart/shipping" (click)="submit()">Continue to Shipping</button>
                     </div>
                 </div>
             </form>

@@ -1,172 +1,220 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    Contact
-                </li>
-                <li class="list-group-item">
-                    Ship To
-                </li>
-                <li class="list-group-item">
-                    Method
-                </li>
-              </ul>
+<div class="row">
+    <div class="col-9" [@enterSlideLeft]>
+            
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Contact: <span class="text-secondary"> {{ UserDetailsService.getContactString() }} </span> <a routerLink="/cart/delivery"> Change </a>
+                        </li>
+                        <li class="list-group-item">
+                            Ship To: <span class="text-secondary"> {{ UserDetailsService.getDeliveryString() }} </span> <a routerLink="/cart/delivery"> Change </a>
+                        </li>
+                        <li class="list-group-item">
+                            Shipping Method: <span class="text-secondary"> {{ UserDetailsService.getShippingMethodString() }} </span> <a routerLink="/cart/shipping"> Change </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        Payment
+                    </h5>
+                    <p>
+                        All transactions are secure and encrypted.
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item" aria-disabled="true">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios1" value="option1" (click)="changePaymentMethod('creditCard')">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Credit Card
+                                </label>
+                            </div>
+                        </li>
+                        <li [@enterDown] [@exitUp] *ngIf="paymentMethod === 'creditCard'" class="list-group-item list-group-item-light">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="cardNumber" class="form-label">Card Number</label>
+                                    <input type="text" class="form-control" id="cardNumber">
+
+                                    <label for="cardName" class="form-label">Name on card</label>
+                                    <input type="text" class="form-control" id="cardName">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="cardNumber" class="form-label">Expiration date</label>
+                                    <input type="text" class="form-control" id="cardNumber">
+                                </div>
+                                <div class="col-6">
+                                    <label for="cardName" class="form-label">Security code</label>
+                                    <input type="text" class="form-control" id="cardName">
+                                </div>
+                            </div>
+                            
+
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios2" value="option2" (click)="changePaymentMethod('paypal')">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Pay Pal
+                                </label>
+                            </div>
+                        </li>
+                        <li [@enterDown] [@exitUp] *ngIf="paymentMethod === 'paypal'" class="list-group-item list-group-item-light">
+                            After clicking “Complete order”, you will be redirected to Afterpay to complete your purchase securely.
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios3" value="option2" (click)="changePaymentMethod('afterpay')">
+                                <label class="form-check-label" for="exampleRadios3">
+                                    Afterpay
+                                </label>
+                            </div>
+                        </li>
+                        <li [@enterDown] [@exitUp] *ngIf="paymentMethod === 'afterpay'" class="list-group-item list-group-item-light">
+                            After clicking “Complete order”, you will be redirected to Afterpay to complete your purchase securely.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="col">
+                    <h5>
+                        Billing Address
+                    </h5>
+                    <p>
+                        Select the address that matches your card or payment method.
+                    </p>
+
+                    <ul class="list-group">
+                        <li class="list-group-item" aria-disabled="true">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="billingAddress" id="sameBilling" value="option1" (click)="changeBillingAddress(false)">
+                                <label class="form-check-label" for="sameBilling">
+                                    Same as shipping address
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="billingAddress" id="differentBilling" value="option2" (click)="changeBillingAddress(true)">
+                                <label class="form-check-label" for="differentBilling">
+                                    Use a different billing address
+                                </label>
+                            </div>
+                        </li>
+                        <li [@enterDown] [@exitUp] *ngIf="billingAddress === true" class="list-group-item list-group-item-light">
+                            <form>
+                                    
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName">
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="company" class="form-label">Company</label>
+                                        <input type="text" class="form-control" id="company">
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address">
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="apartment" class="form-label">Apartment, suite, etc.</label>
+                                        <input type="text" class="form-control" id="apartment">
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="suburb" class="form-label">Suburb</label>
+                                        <input type="text" class="form-control" id="suburb">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="state" class="form-label">State/Territory</label>
+                                        <input type="text" class="form-control" id="state">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="postCode" class="form-label">Postcode</label>
+                                        <input type="number" class="form-control" id="postCode">
+                                    </div>
+                                </div> 
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row mt-3 justify-content-end">
+                <div class="col">
+                    <button class="btn btn-outline-dark btn-lg" routerLink="/cart/payment">Complete Order</button>
+                </div>
+            </div>
         </div>
+
     </div>
 
-    <div class="row">
-        <div class="col">
-            <h5>
-                Payment
-                {{ paymentMethod }}
-            </h5>
-            <p>
-                All transactions are secure and encrypted.
-            </p>
-            <ul class="list-group">
-                <li class="list-group-item" aria-disabled="true">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios1" value="option1" (click)="changePaymentMethod('creditCard')">
-                        <label class="form-check-label" for="exampleRadios1">
-                            Credit Card
-                        </label>
-                    </div>
-                </li>
-                <li *ngIf="paymentMethod === 'creditCard'" class="list-group-item list-group-item-light">
-                    <div class="row">
-                        <div class="col">
-                            <label for="cardNumber" class="form-label">Card Number</label>
-                            <input type="text" class="form-control" id="cardNumber">
-
-                            <label for="cardName" class="form-label">Name on card</label>
-                            <input type="text" class="form-control" id="cardName">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="cardNumber" class="form-label">Expiration date</label>
-                            <input type="text" class="form-control" id="cardNumber">
-                        </div>
-                        <div class="col-6">
-                            <label for="cardName" class="form-label">Security code</label>
-                            <input type="text" class="form-control" id="cardName">
-                        </div>
-                    </div>
-                    
-
-                </li>
-                <li class="list-group-item">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios2" value="option2" (click)="changePaymentMethod('paypal')">
-                        <label class="form-check-label" for="exampleRadios2">
-                            Pay Pal
-                        </label>
-                    </div>
-                </li>
-                <li *ngIf="paymentMethod === 'paypal'" class="list-group-item list-group-item-light">
-                    After clicking “Complete order”, you will be redirected to Afterpay to complete your purchase securely.
-                </li>
-                <li class="list-group-item">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios3" value="option2" (click)="changePaymentMethod('afterpay')">
-                        <label class="form-check-label" for="exampleRadios3">
-                            Afterpay
-                        </label>
-                    </div>
-                </li>
-                <li *ngIf="paymentMethod === 'afterpay'" class="list-group-item list-group-item-light">
-                    After clicking “Complete order”, you will be redirected to Afterpay to complete your purchase securely.
-                </li>
-              </ul>
-        </div>
-    </div>
-
-    <div>
-        <div class="col">
-            <h5>
-                Billing Address
-            </h5>
-            <p>
-                Select the address that matches your card or payment method.
-            </p>
-
-            <ul class="list-group">
-                <li class="list-group-item" aria-disabled="true">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="billingAddress" id="exampleRadios1" value="option1" (click)="changeBillingAddress(false)">
-                        <label class="form-check-label" for="exampleRadios1">
-                            Same as shipping address
-                        </label>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="billingAddress" id="exampleRadios2" value="option2" (click)="changeBillingAddress(true)">
-                        <label class="form-check-label" for="exampleRadios2">
-                            Use a different billing address
-                        </label>
-                    </div>
-                </li>
-                <li *ngIf="billingAddress === true" class="list-group-item list-group-item-light">
-                    <form>
+    <div [@enterSlideRight] class="col-3 bg-light vh-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ng-container *ngFor="let item of CartService.getCartMap() | keyvalue">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="item">
+                                    <span class="notify-badge">
+                                        {{item.value.amount}}
+                                    </span>
+                                    
+                                    <img src={{item.value.item.imageUrl}} class="rounded img-fluid"  alt="...">
+                                </div>
                                
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="firstName">
                             </div>
-                            <div class="col-6">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="lastName">
+                            <div class="col-6 pt-3">
+                                <p> 
+                                    {{item.value.item.name}} 
+                                </p>
                             </div>
+                            <div class="col-3 pt-3">
+                                <p> 
+                                    {{item.value.amount * item.value.item.price | currency}} 
+                                </p>
+                            </div>
+                       
                         </div>
-        
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="company" class="form-label">Company</label>
-                                <input type="text" class="form-control" id="company">
-                            </div>
-                        </div>
-        
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address">
-                            </div>
-                        </div>
-        
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="apartment" class="form-label">Apartment, suite, etc.</label>
-                                <input type="text" class="form-control" id="apartment">
-                            </div>
-                        </div>
-        
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="suburb" class="form-label">Suburb</label>
-                                <input type="text" class="form-control" id="suburb">
-                            </div>
-                            <div class="col-4">
-                                <label for="state" class="form-label">State/Territory</label>
-                                <input type="text" class="form-control" id="state">
-                            </div>
-                            <div class="col-4">
-                                <label for="postCode" class="form-label">Postcode</label>
-                                <input type="number" class="form-control" id="postCode">
-                            </div>
-                        </div> 
-                    </form>
-                </li>
-              </ul>
+                    </ng-container>
+                    <hr>
+                    <p>
+                        Subtotal {{ CartService.getCartTotalPrice() }}
+                    </p>
+                    <p>
+                        Shipping 
+                    </p>
+                    <hr>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="row mt-3 justify-content-end">
-        <div class="col">
-            <button class="btn btn-outline-dark btn-lg" routerLink="/cart/payment">Complete Order</button>
-        </div>
+       
     </div>
 </div>

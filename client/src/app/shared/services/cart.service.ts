@@ -37,7 +37,7 @@ export class CartService {
   getCartItemsAmount(){
     var amount = 0;
     this.cart.forEach((value: any, key: string) => {
-      amount =+ value.amount;
+      amount = amount + value.amount;
     });
     return amount;
   }
@@ -45,7 +45,7 @@ export class CartService {
   getCartTotalPrice(){
     var totalPrice = 0;
     this.cart.forEach((value: any, key: string) => {
-      totalPrice =+ (value.amount * value.item.price);
+      totalPrice = totalPrice + (value.amount * value.item.price);
     });
     return totalPrice;
   }

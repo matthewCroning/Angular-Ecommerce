@@ -8,6 +8,8 @@ import { CartDeliveryInformationComponent } from './cart-delivery-information/ca
 import { CartShippingComponent } from './cart-shipping/cart-shipping.component';
 import { CartPaymentComponent } from './cart-payment/cart-payment.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Browser } from 'puppeteer';
 
 
 @NgModule({

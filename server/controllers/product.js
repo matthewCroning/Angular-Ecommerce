@@ -23,7 +23,7 @@ exports.findProductById = function(req, res, next){
 
 exports.create = function(req, res, next){
     var product = req.body.product;
-    
+    console.log(product);
     var newProduct = new Product(product);
     newProduct.save();
     return res.json(newProduct);

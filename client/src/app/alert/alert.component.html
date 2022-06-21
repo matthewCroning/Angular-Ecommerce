@@ -1,0 +1,5 @@
+
+    <div [@fadeInUp] [@fadeOutDown] *ngIf="alertMessage" class="alert alert-primary alert-dismissible" role="alert">
+        {{ alertMessage }}
+        <button type="button" class="btn-close" (click)="closeAlert()"></button>
+    </div>
