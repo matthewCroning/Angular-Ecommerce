@@ -15,4 +15,12 @@ export class ProductService {
   findProductById(id: any){
     return this.http.get('/api/product/findProductById/' + id);     
   }
+
+  reduceStock(id: any){
+    return this.http.get('/api/product/reduceStock/' + id);     
+  }
+
+  increaseStock(id: any){
+    return this.http.get('/api/product/increaseStock/' + id);     
+  }
 }

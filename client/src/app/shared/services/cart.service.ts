@@ -1,3 +1,4 @@
+import { ProductService } from './product.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,27 +8,39 @@ export class CartService {
 
   cart = new Map<string, any>();
   
-  constructor() { 
+  constructor(public ProductService: ProductService) { 
     this.loadCart();
   }
 
   addToCart(id: any, item: any){
-    this.loadCart();
-    if(this.cart.has(id)){
-      this.cart.set(id, {amount: this.cart.get(id).amount! + 1, item: item});
-    } else {
-      this.cart.set(id, {amount: 1, item: item});
+
+    this.ProductService.reduceStock(id).subscribe((data: any) => {
+      if(data.status == "success"){
+        if(this.cart.has(id)){
+          this.cart.set(id, {amount: this.cart.get(id).amount! + 1, item: item});
+        } else {
+          this.cart.set(id, {amount: 1, item: item});
+        } 
+      }
     }
+    )
+  
     this.saveCart();
   }
 
   reduceFromCart(id:any){
-    this.loadCart();
-    if(this.cart.get(id).amount > 1){
-      this.cart.set(id, {amount: this.cart.get(id).amount! - 1, item: this.cart.get(id).item});
-    } 
+    
+    this.ProductService.increaseStock(id).subscribe((data :any) => {
+      if(data.status == "success"){
+        if(this.cart.get(id).amount > 1){
+          this.cart.set(id, {amount: this.cart.get(id).amount! - 1, item: this.cart.get(id).item});
+        } 
+      }
+    })
+
     this.saveCart();
   }
+
   removeFromCart(id: any){
     this.loadCart();
     this.cart.delete(id);
