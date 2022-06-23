@@ -6,11 +6,13 @@ const express       = require("express"),
 
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
+const cartRoutes = require("./routes/cart");
 
 const PORT = process.env.PORT || '3001';
 
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes),
+app.use("/api/cart", cartRoutes),
 app.use("/api/product", productRoutes);
 
 app.listen(PORT, function(){

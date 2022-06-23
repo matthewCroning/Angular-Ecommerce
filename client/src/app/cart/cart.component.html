@@ -1,3 +1,7 @@
+<ng-container  *ngFor="let item of CartService.getCart().cartItems  | keyvalue">
+    {{ item.key }}
+    {{ item.value }}
+</ng-container>
 <div class="container" *ngIf="CartService.getCartItemsAmount() > 0">
     <div class="row">
         <div class="col-12">
@@ -5,14 +9,15 @@
                 Total Products in Cart: {{ CartService.getCartItemsAmount() }} 
             </h5>
             <h5>
-                Total Price: {{ CartService.getCartTotalPrice() | currency:'AUD' }} 
+                <!-- Total Price: {{ CartService.getCartTotalPrice() | currency:'AUD' }}  -->
             </h5>
         </div>
     </div>
    
         <br>
 
-<ng-container *ngFor="let mapItem of CartService.getCartMap() | keyvalue">
+
+<!-- <ng-container *ngFor="let mapItem of CartService.getCartMap() | keyvalue">
     <div class="row">
         <div class="col-2">
             <img src={{mapItem.value.item.imageUrl}} class="img-fluid" alt="..."> 
@@ -26,12 +31,12 @@
             <button class="btn btn-sm btn-outline-dark" (click)="CartService.addToCart(mapItem.value.item._id, mapItem.value.item)">+</button>
             </p>
             <p>Price: {{mapItem.value.item.price | currency:'AUD'}} </p> 
-            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart(mapItem.value.item._id)">remove</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart(product)">remove</button>
         </div>
     </div>
   
     
-</ng-container>    
+</ng-container>     -->
 <div class="row mt-3">
     <div class="col offset-md-11">
         <button class="btn btn-outline-dark btn-lg" routerLink="/cart/delivery">Checkout</button>

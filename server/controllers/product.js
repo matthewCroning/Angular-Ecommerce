@@ -32,26 +32,7 @@ exports.create = function(req, res, next){
 }
 
 exports.reduceStock = async function(req, res, next){
-    var productId = req.params.productId; 
-    lock.acquire(productId, async function(done) { 
-        Product.findById(productId, async function(err, product) {
-            if (!err) {
-                if(product.stockAmount > 0){          
-                    await product.stockAmount--;
-                    await product.save();
-                    console.log(product, "success");
-                    done();
-                    return res.json({product: product, status: "success"});
-                } else {
-                    console.log(product, "failed");
-                    done();
-                    return res.json({product: product, status: "failed"});
-                }
-            } else {
-                return res.json({status: "failed"});
-            }
-        })
-    });
+    
 }
 
 exports.increaseStock = async function(req, res, next){
