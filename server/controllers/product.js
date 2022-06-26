@@ -23,12 +23,24 @@ exports.findProductById = function(req, res, next){
     });
 }
 
+exports.findProductsByIds = function(req, res, next){  
+    var productIds = req.body.productIds; 
+    console.log(productIds);
+    Product.find().where('_id').in(productIds).exec(function(err, product){
+        if (!err) { 
+            return res.json(product);
+        } else {
+            throw err;
+        }
+    });
+}
+
 exports.create = function(req, res, next){
     var product = req.body.product;
     console.log(product);
     var newProduct = new Product(product);
     newProduct.save();
-    return res.json(newProduct);
+    return res.json({product: newProduct, message: "successfully created new product"});
 }
 
 exports.reduceStock = async function(req, res, next){

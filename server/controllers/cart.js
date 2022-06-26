@@ -40,13 +40,13 @@ exports.addProductToCart = async function(req, res, next){
                             cart.cartItems.set(productId, amount);
                         }
                         cart.save();
-
+                        console.log(cart);
                         await done();
-                        return res.json({cart: cart, status: "success"});
+                        return res.json({amount: cart.cartItems.get(productId), status: "success"});
                     } else {
                         console.log(product, "failed");
                         await done();
-                        return res.json({cart: cart, status: "failed"});
+                        return res.json({amount: cart.cartItems.get(productId), status: "failed"});
                     }
                 } else {
                     return res.json({status: "failed"});
@@ -61,34 +61,25 @@ exports.removeProductFromCart = async function(req, res, next){
     productId = req.body.productId;
     amount = req.body.amount
     Cart.findById(cartId, async function(err, cart) { 
-        lock.acquire(productId, async function(done) { 
             Product.findById(productId, async function(err, product) {
                 if (!err) {
-                    if(product.stockAmount > 0){          
+                         
                         if(cart.cartItems.has(productId)){
                             await cart.cartItems.set(productId, cart.cartItems.get(productId) - amount);
                             if(cart.cartItems.get(productId) == 0){
                                 await cart.cartItems.delete(productId);
-                            }
+                            } 
                             product.stockAmount = product.stockAmount + amount;
                             await product.save();
-                        
-                        } else {
-                            cart.cartItems.set(productId, 1);
-                        }
-                        cart.save();
-
-                        await done();
-                        return res.json({product: product, status: "success"});
-                    } else {
-                        console.log(product, "failed");
-                        await done();
-                        return res.json({product: product, status: "failed"});
+                            await cart.save();
+                            console.log(cart);
+                           
+                            return res.json({amount: cart.cartItems.get(productId), status: "success"});       
                     }
                 } else {
                     return res.json({status: "failed"});
                 }
             })
-        });
+        
     });
 }

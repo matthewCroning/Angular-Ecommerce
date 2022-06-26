@@ -31,7 +31,7 @@ export class CreateProductComponent implements OnInit {
       }
 
       this.AdminService.createProduct(this.product).subscribe((data: any) => {
-        this.AlertService.sendAlert(data);
+        this.AlertService.sendAlert(data.message);
       })
     }
 

@@ -16,6 +16,10 @@ export class ProductService {
     return this.http.get('/api/product/findProductById/' + id);     
   }
 
+  findProductsByIds(ids: any[]){
+    return this.http.post('/api/product/findProductsByIds', {productIds: ids});       
+  }
+
   reduceStock(id: any){
     return this.http.get('/api/product/reduceStock/' + id);     
   }
