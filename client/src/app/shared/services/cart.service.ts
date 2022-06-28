@@ -17,33 +17,11 @@ export class CartService {
       this.http.get('/api/cart/createCart').subscribe((cartId: any) =>{
         this.cartId = cartId;
         localStorage.setItem('cartId', this.cartId); 
-        console.log("created cart");
       });   
     } else {
       this.cartId = localStorage.getItem('cartId');
       this.http.get('/api/cart/getCart/' + this.cartId).subscribe((cart: any) =>{
         this.cart = cart;
-        var items: any[] = [];
-        Object.entries(cart.cartItems).map(item => items.push({id: item[0], amount: item[1] }));
-        
-        this.ProductService.findProductsByIds(Object.keys(this.cart.cartItems)).subscribe((data: any) => {
-          console.log(data.length);
-          console.log(data);
-          for(var i = 0; i < items.length; i++){
-            for(var j = 0; j < data.length; j++){
-              if(items[i].id === data[j]._id){
-                console.log("here");
-                items[i].product = data[j];
-              }
-            }
-          }
-          cart.cartItems = items;
-          this.ready = true;
-          console.log(items);
-          console.log(cart);
-        })
-      
- 
       })
     }
   }
@@ -51,44 +29,43 @@ export class CartService {
   addToCart(productId: any, amount: any){
     console.log("running add to cart")
     this.http.post('/api/cart/addProductToCart', {cartId: this.cartId, productId: productId, amount: amount}).subscribe((data: any) =>{
-      for(var i = 0; i < this.cart.cartItems.length; i++){
-        console.log("inside subsriber add to cart");
-        console.log(this.cart.cartItems[i].id, productId);
-        if(this.cart.cartItems[i].id === productId){
-          console.log("true");
-          console.log(this.cart.cartItems[i]);
-          this.cart.cartItems[i].amount = data.amount;
-        }
-      }
-      console.log(this.cart);
+      this.cart.cartItems[data.cartItem.product._id] = data.cartItem;
     })
+      
 
   }
 
   
   removeFromCart(productId: any, amount: any){
     this.http.post('/api/cart/removeProductFromCart', {cartId: this.cartId, productId: productId, amount: amount}).subscribe((data: any) =>{
-      for(var i = 0; i < this.cart.cartItems.length; i++){
-        if(this.cart.cartItems[i].id == productId)
-          this.cart.cartItems[i].amount = data.amount;
-      }
+      if(data.cartItem.amount === 0){
+          delete this.cart.cartItems[productId];
+        } else {
+          this.cart.cartItems[data.cartItem.product._id] = data.cartItem;
+        }  
     })
   }
 
   getCartItemsAmount(){
     var amount = 0;
-    for (let item of this.cart.cartItems) {
-      amount = item.amount + amount;
+    if(this.cart){
+      for (let item in this.cart.cartItems) {
+        amount = this.cart.cartItems[item].amount + amount;
+      }
     }
-
     return amount;
   }
 
+  getCartTotalPrice(){
+    var total = 0;
+    for (let item in this.cart.cartItems) {
+      total = (this.cart.cartItems[item].amount*this.cart.cartItems[item].product.price) + total;
+    }
+    return total;
+  }
   getCart(){
     return this.cart;
   }
 
-  getReady(){
-    return this.ready;
-  }
+
 }

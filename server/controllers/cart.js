@@ -13,7 +13,7 @@ exports.create = async function(req, res, next){
 exports.getCart = async function(req, res, next){
     console.log("get Cart");
     cartId = req.params.cartId;
-    Cart.findById(cartId, async function(err, cart) { 
+    Cart.findById(cartId).populate('cartItems.$*.product').exec(async function(err, cart) { 
         return res.json(cart);
     });
 }
@@ -35,18 +35,18 @@ exports.addProductToCart = async function(req, res, next){
                         }
                         await product.save();
                         if(cart.cartItems.has(productId)){
-                            cart.cartItems.set(productId, cart.cartItems.get(productId) + amount);
+                            cart.cartItems.set(productId, {amount: cart.cartItems.get(productId).amount + amount, product: product});
                         } else {
-                            cart.cartItems.set(productId, amount);
+                            cart.cartItems.set(productId, {amount: amount, product: product});
                         }
                         cart.save();
                         console.log(cart);
                         await done();
-                        return res.json({amount: cart.cartItems.get(productId), status: "success"});
+                        return res.json({cartItem : {amount: cart.cartItems.get(productId).amount, product: product}, status: "success"});
                     } else {
                         console.log(product, "failed");
                         await done();
-                        return res.json({amount: cart.cartItems.get(productId), status: "failed"});
+                        return res.json({cartItem : {amount: cart.cartItems.get(productId).amount, product: product}, status: "failed"});
                     }
                 } else {
                     return res.json({status: "failed"});
@@ -65,16 +65,20 @@ exports.removeProductFromCart = async function(req, res, next){
                 if (!err) {
                          
                         if(cart.cartItems.has(productId)){
-                            await cart.cartItems.set(productId, cart.cartItems.get(productId) - amount);
-                            if(cart.cartItems.get(productId) == 0){
-                                await cart.cartItems.delete(productId);
-                            } 
                             product.stockAmount = product.stockAmount + amount;
                             await product.save();
+                            
+                            if(cart.cartItems.get(productId).amount - amount == 0){
+                                await cart.cartItems.delete(productId);    
+                                await cart.save();
+                                console.log(cart);
+                                return res.json({cartItem: {amount: 0, product: product}, status: "success"});       
+                            } else {
+                                await cart.cartItems.set(productId, {amount: cart.cartItems.get(productId).amount - amount, product: product});
+                            }
                             await cart.save();
                             console.log(cart);
-                           
-                            return res.json({amount: cart.cartItems.get(productId), status: "success"});       
+                            return res.json({cartItem: {amount: cart.cartItems.get(productId).amount, product: product}, status: "success"});       
                     }
                 } else {
                     return res.json({status: "failed"});

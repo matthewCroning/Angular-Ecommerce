@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require("../controllers/product");
 
 router.get("/findAll", Product.findAll);
+router.get("/find/:limit/:page", Product.find);
 router.get("/findProductById/:productId", Product.findProductById);
 router.post("/findProductsByIds", Product.findProductsByIds);
 

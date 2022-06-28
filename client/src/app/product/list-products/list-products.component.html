@@ -1,14 +1,21 @@
 <br>
 
-<div class="container">   
-    <div class="row">
-        <ng-container *ngFor="let product of products">         
-            <div class="col-2" routerLink="/product/view/{{product._id}}">
-                <ng-container >
-                    <img src={{product.imageUrl}} class="img-fluid" alt="..."> 
-                    <p> {{product.name}} </p>
-                </ng-container>
-            </div>
-        </ng-container>  
-    </div>   
+<div class="search-results" 
+    infinite-scroll 
+    (scrolled)="onScrollDown($event)" 
+    (scrolledUp)="onScrollUp($event)">
+
+    <div class="container">   
+        <div class="row">
+            <ng-container *ngFor="let product of products">         
+                <div class="col-4" routerLink="/product/view/{{product._id}}">
+                    <ng-container >
+                        <img src={{product.imageUrl}} class="img-fluid" alt="..."> 
+                        <p> {{product.name}} </p>
+                    </ng-container>
+                </div>
+            </ng-container>  
+        </div>   
+    </div>
+    
 </div>

@@ -3,48 +3,63 @@
     {{ item.value }}
 </ng-container> -->
 
-<div class="container" *ngIf="CartService.getCartItemsAmount() > 0">
     <div class="row">
-        <div class="col-12">
-            <h5>
-                Total Products in Cart: {{ CartService.getCartItemsAmount() }} 
-            </h5>
-            <h5>
-                <!-- Total Price: {{ CartService.getCartTotalPrice() | currency:'AUD' }}  -->
-            </h5>
+        <div class="col-9">
+            <div class="container mt-3">
+                <ng-container *ngFor="let item of CartService.getCart().cartItems | keyvalue">
+                    <div class="row">
+                        <div class="col-2">    
+                            <img [src]="$any(item.value).product.imageUrl" class="img-fluid" alt="..."> 
+                        </div>
+                        <div class="col-9">
+                            Product: <a routerLink="/product/view/{{ $any(item.value).product._id}}">{{ $any(item.value).product.name }}</a>
+                            <p>
+                            Amount:
+                            <button class="btn btn-sm btn-outline-dark" (click)="CartService.removeFromCart( $any(item.value).product._id, 1)">-</button>
+                            {{ $any(item.value).amount }}
+                            <button class="btn btn-sm btn-outline-dark" (click)="CartService.addToCart( $any(item.value).product._id , 1)">+</button>
+                            </p>
+                            <p>Price: {{ $any(item.value).product.price | currency:'AUD'}} </p> 
+                            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart( $any(item.value).product._id,  $any(item.value).amount)">remove</button>
+                        </div>
+                    </div>    
+                </ng-container>    
+                <div class="row mt-3">
+                    <div class="col">
+                        <button class="btn btn-outline-dark btn-lg" routerLink="/cart/delivery">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 bg-light vh-100">
+            <div class="container mt-3" *ngIf="CartService.getCartItemsAmount() > 0">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>
+                            Total Products in Cart: {{ CartService.getCartItemsAmount() }} 
+                        </h5>
+                        <h5>
+                            Total Price: {{ CartService.getCartTotalPrice() | currency:'AUD' }} 
+                        </h5>
+                    </div>
+                </div>
+            </div>   
         </div>
     </div>
-   
+
+    
+
         <br>
 
 
-<ng-container *ngFor="let item of CartService.getCart().cartItems">
-    <div class="row">
-        <div class="col-2">
-            <img src={{item.product.imageUrl}} class="img-fluid" alt="..."> 
-        </div>
-        <div class="col-9">
-            Product: <a routerLink="/product/view/{{item.id}}">{{ item.product.name }}</a>
-            <p>
-            Amount:
-            <button class="btn btn-sm btn-outline-dark" (click)="CartService.removeFromCart(item.id, 1)">-</button>
-            {{ item.amount }}
-            <button class="btn btn-sm btn-outline-dark" (click)="CartService.addToCart(item.id, 1)">+</button>
-            </p>
-            <p>Price: {{item.product.price | currency:'AUD'}} </p> 
-            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart(item.id, item.amount)">remove</button>
-        </div>
-    </div>
-  
-    
-</ng-container>    
 <div class="row mt-3">
     <div class="col offset-md-11">
         <button class="btn btn-outline-dark btn-lg" routerLink="/cart/delivery">Checkout</button>
     </div>
 </div>
 
-</div>
+
 
 
 

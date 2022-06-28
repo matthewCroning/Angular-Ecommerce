@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 const cartSchema = new Schema({
     cartItems: {
         type: Map, 
-        of: Number
+        of: {
+            amount: Number,
+            product: { type: Schema.Types.ObjectId, ref: 'Product' }     
+        }
     },
     lastAddedItemTime: Date,
     amount: Number

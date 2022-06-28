@@ -12,6 +12,18 @@ exports.findAll = function(req, res, next){
     });
 }
 
+exports.find = function(req, res, next){  
+    limit = req.params.limit;
+    skip = req.params.page * limit;
+    Product.find().limit(limit).skip(skip).exec(function(err, products) {
+        if (!err) { 
+            return res.json(products);
+        } else {
+            throw err;
+        }
+    });
+}
+
 exports.findProductById = function(req, res, next){  
     var productId = req.params.productId; 
     Product.findById(productId, function(err, product) {

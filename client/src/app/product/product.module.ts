@@ -5,6 +5,7 @@ import { ProductRoutingModule } from './product-routing.module';
 import { ListProductsComponent } from './list-products/list-products.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [    
@@ -14,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     ProductRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    InfiniteScrollModule
   ]
 })
 export class ProductModule { }

@@ -12,6 +12,10 @@ export class ProductService {
     return this.http.get('/api/product/findall');   
   }
 
+  find(limit: any, page: any){
+    return this.http.get('/api/product/find/' + limit + "/" + page);  
+  }
+
   findProductById(id: any){
     return this.http.get('/api/product/findProductById/' + id);     
   }
