@@ -1,21 +1,50 @@
-<br>
-
-<div class="search-results" 
-    infinite-scroll 
-    (scrolled)="onScrollDown($event)" 
-    (scrolledUp)="onScrollUp($event)">
-
-    <div class="container">   
+    <div class="container mt-3">   
+        <div class="row mb-3">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
+              </div>
+            <div class="col-3 offset-md-9">
+                <select class="form-select form-select-sm" aria-label="Default select example" (change)="sortProducts($event.target)">
+                    <option >Popular</option>    
+                    <option value="highToLow" [selected]="sort === 'price' && order === -1">Price High To Low</option>
+                    <option value="lowToHigh" [selected]="sort === 'price' && order === 1">Price Low to High</option>
+                    <option value="aToZ" [selected]="sort === 'name' && order === 1">Name A to Z</option>
+                    <option value="zToA" [selected]="sort === 'name' && order === -1">Name Z to A</option>
+                  
+                </select>
+            </div>
+        </div>
         <div class="row">
-            <ng-container *ngFor="let product of products">         
-                <div class="col-4" routerLink="/product/view/{{product._id}}">
-                    <ng-container >
-                        <img src={{product.imageUrl}} class="img-fluid" alt="..."> 
+            
+            <ng-container *ngFor="let product of products; let i = index" >         
+                <div [@enterSlideLeft]="{ value: '', params: { delay: ((i * delay) + delay)} }" class="col-3 text-center"> 
+                    <span routerLink="/product/view/{{product._id}}">
+                        <img src={{product.images[0]}} class="img-fluid h-50 mw-100" alt="..."> 
+                        <h5> {{product.brand}} | {{product.price | currency}} </h5>
                         <p> {{product.name}} </p>
-                    </ng-container>
+                    </span>  
                 </div>
             </ng-container>  
         </div>   
+
+
+        <div class="row" *ngIf="products"  [@enterDown]>
+            <div class="col-3">
+                <button class="btn btn-primary w-100" *ngIf="page > 1" (click)="goToPage(page - 1)">Previous</button>
+            </div>
+            <div class="col-6 text-center">
+                <ng-container *ngFor="let num of pages"> 
+                    <ng-container *ngIf="(num-1) * limit < productCount">
+                        <span class="btn" (click)="page !== num ? goToPage(num) : null"  [ngClass]="page != num ? 'text-decoration-underline' : 'null'">
+                            {{ num }}
+                        </span>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="col-3">
+                <button *ngIf="page * limit < productCount" class="btn btn-primary w-100" (click)="goToPage(page + 1)">Next</button>
+            </div>
+        </div>
     </div>
     
-</div>

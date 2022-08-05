@@ -6,14 +6,20 @@ import { Injectable } from '@angular/core';
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) { }
+  productCount!: any;
+
+  constructor(private http: HttpClient) {
+    this.getCount().subscribe((count: any) =>{
+      this.productCount = count;
+    })
+   }
 
   findAll(){
     return this.http.get('/api/product/findall');   
   }
 
-  find(limit: any, page: any){
-    return this.http.get('/api/product/find/' + limit + "/" + page);  
+  find(limit: any, page: any, sort: any, order: any){
+    return this.http.get('/api/product/find/' + limit + "/" + page + "/" + sort + "/" + order);  
   }
 
   findProductById(id: any){
@@ -30,5 +36,13 @@ export class ProductService {
 
   increaseStock(id: any){
     return this.http.get('/api/product/increaseStock/' + id);     
+  }
+
+  getCount(){
+    return this.http.get('/api/product/getCount');     
+  }
+
+  getProductCount(){
+    return this.productCount;
   }
 }

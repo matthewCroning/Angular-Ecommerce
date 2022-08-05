@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertComponent } from './alert/alert.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({

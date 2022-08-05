@@ -6,6 +6,8 @@ import { ListProductsComponent } from './list-products/list-products.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { GalleryModule } from 'ng-gallery';
 
 @NgModule({
   declarations: [    
@@ -16,7 +18,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     CommonModule,
     ProductRoutingModule,
     HttpClientModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    GalleryModule
   ]
 })
 export class ProductModule { }
+

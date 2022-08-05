@@ -5,20 +5,26 @@ import { ListProductsComponent } from './list-products/list-products.component';
 import { execPath } from 'process';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ListProductsComponent
-  },
+
   {
     path: 'view/:productId',
     component: ViewProductComponent,
-    pathMatch: 'full',
   },
   {
-    path: ':limit/:page',
+    path: ':page/:sort/:order',
     component: ListProductsComponent
   },
+  {
+    path: ':page',
+    component: ListProductsComponent
+  },
+  {
+    path: '',
+    component: ListProductsComponent
+  }
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -11,7 +11,7 @@
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-light position-relative" aria-current="page" routerLink="cart">
-              Cart 
+              <i class="bi bi-bag"></i>
               <ng-container *ngIf="CartService.getCartItemsAmount() > 0">
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {{CartService.getCartItemsAmount()}}  

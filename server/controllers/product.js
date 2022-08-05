@@ -15,13 +15,21 @@ exports.findAll = function(req, res, next){
 exports.find = function(req, res, next){  
     limit = req.params.limit;
     skip = req.params.page * limit;
-    Product.find().limit(limit).skip(skip).exec(function(err, products) {
+    sort = req.params.sort;
+    order = req.params.order;
+    Product.find().limit(limit).skip(skip).sort([[sort, order]]).exec(function(err, products) {
         if (!err) { 
             return res.json(products);
         } else {
             throw err;
         }
     });
+}
+
+exports.getCount = function(req, res, next){
+    Product.count({}, function( err, count){
+        return res.json(count);
+    })
 }
 
 exports.findProductById = function(req, res, next){  
