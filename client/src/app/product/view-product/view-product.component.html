@@ -3,8 +3,17 @@
 
 <div class="container" *ngIf="product">
     <div class="row">
-        <div class="col-6">
-            <gallery *ngIf="images.length > 0" [items]="images" thumbView="contain" thumbPosition="left" imageSize="contain" [counter]=false></gallery>
+        <div class="col-1">
+            <div class="overflow-auto h-100">
+                <ng-container *ngFor="let image of product.images">
+                    <img [ngClass]="{'border' : image === imageSelected}" class="img-fluid mb-3 p-1" src={{image}} alt="" (click)="selectImage(image)">
+                </ng-container>
+            </div>
+        </div>
+        <div class="col-5">
+
+            
+            <img [@enterSlideLeft]="imageSelected"  *ngFor="let imageSelected of [ imageSelected ]" class="img-fluid mb-3 border p-1" src={{imageSelected}} alt="">
         </div>
         <div class="col-3">
             <h5> {{product.brand}} </h5>

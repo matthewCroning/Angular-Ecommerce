@@ -21,6 +21,7 @@ export class ListProductsComponent implements OnInit {
   page: any;
   order: any;
   sort: any;
+  searchText: any;
   pages: any = [];
   limit = 4;
 
@@ -37,16 +38,11 @@ export class ListProductsComponent implements OnInit {
     
     this.productCount = this.ProductService.getProductCount();
 
-    this.page = Number(this.route.snapshot.paramMap.get('page'));
-    this.sort = String(this.route.snapshot.paramMap.get('sort'));
-    this.order = Number(this.route.snapshot.paramMap.get('order'));
+    this.page = this.route.snapshot.paramMap.get('page') ? Number(this.route.snapshot.paramMap.get('page')) : 1;
+    this.sort = this.route.snapshot.paramMap.get('sort') ? String(this.route.snapshot.paramMap.get('sort')) : "name";
+    this.order = this.route.snapshot.paramMap.get('order') ? Number(this.route.snapshot.paramMap.get('order')) : 1;
+    this.searchText =  this.route.snapshot.paramMap.get('search') ? String(this.route.snapshot.paramMap.get('search')) : "";
 
-    if(this.page === 0 && this.sort === 'null' && this.order === 0){
-      console.log("no sort, page and order");
-      this.page = 1;
-      this.sort = "name"
-      this.order = 1;
-    }
     var start = this.page - 2;
     while(this.pages.length <= 4){
       if(start > 0){
@@ -55,10 +51,7 @@ export class ListProductsComponent implements OnInit {
       start++;
     }
     
-    console.log(this.page, this.sort, this.order);
-    this.ProductService.find(this.limit, this.page - 1, this.sort, this.order).subscribe((products: any) => {
-      console.log(this.limit);
-      console.log(products);
+    this.ProductService.find(this.limit, this.page, this.sort, this.order, this.searchText).subscribe((products: any) => {
       this.products = products;
     })
   }
@@ -69,13 +62,16 @@ export class ListProductsComponent implements OnInit {
 
   goToPage(page: any){
     this.page = page;
-    this.router.navigateByUrl('/product/'  +  this.page + "/" + this.sort + "/" + this.order,  {skipLocationChange: true}).then(() => {
-      this.router.navigate(['/product/' +  this.page + "/" + this.sort + "/" + this.order]);
+    this.router.navigateByUrl('/product/'  +  this.page + "/" + this.sort + "/" + this.order + "/" + this.searchText,  {skipLocationChange: false}).then(() => {
+      this.router.navigate(['/product/' +  this.page + "/" + this.sort + "/" + this.order + "/" + this.searchText]);
     });
   }
 
+  search(){
+
+  }
+
   sortProducts(sort: any){
-    console.log(sort.value);
     switch(sort.value) {
       case "popular":
          // if modo 1 is selected do something.

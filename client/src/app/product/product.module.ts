@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { GalleryModule } from 'ng-gallery';
+import { ImgMagnifier } from 'ng-img-magnifier';
 
 @NgModule({
   declarations: [    
@@ -19,7 +21,9 @@ import { GalleryModule } from 'ng-gallery';
     ProductRoutingModule,
     HttpClientModule,
     InfiniteScrollModule,
-    GalleryModule
+    GalleryModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductModule { }

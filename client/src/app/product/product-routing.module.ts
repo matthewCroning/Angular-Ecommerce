@@ -11,6 +11,10 @@ const routes: Routes = [
     component: ViewProductComponent,
   },
   {
+    path: ':page/:sort/:order/:search',
+    component: ListProductsComponent
+  },
+  {
     path: ':page/:sort/:order',
     component: ListProductsComponent
   },

@@ -18,8 +18,9 @@ export class ProductService {
     return this.http.get('/api/product/findall');   
   }
 
-  find(limit: any, page: any, sort: any, order: any){
-    return this.http.get('/api/product/find/' + limit + "/" + page + "/" + sort + "/" + order);  
+  find(limit: any, page: any, sort: any, order: any, search: any){
+    page = page - 1;
+    return this.http.get('/api/product/find/' + limit + "/" + page + "/" + sort + "/" + order + "/" + search);  
   }
 
   findProductById(id: any){

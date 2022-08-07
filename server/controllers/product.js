@@ -17,7 +17,14 @@ exports.find = function(req, res, next){
     skip = req.params.page * limit;
     sort = req.params.sort;
     order = req.params.order;
-    Product.find().limit(limit).skip(skip).sort([[sort, order]]).exec(function(err, products) {
+    search = req.params.search;
+    console.log(search);
+    if(search === undefined){
+        search = '';
+    }
+    search = { $regex: new RegExp(search, 'i') }
+    console.log(search);
+    Product.find({$or:[{"brand": search},{"name": search }]}).limit(limit).skip(skip).sort([[sort, order]]).exec(function(err, products) {
         if (!err) { 
             return res.json(products);
         } else {
