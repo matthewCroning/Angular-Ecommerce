@@ -23,7 +23,7 @@ export class ListProductsComponent implements OnInit {
   sort: any;
   searchText: any;
   pages: any = [];
-  limit = 4;
+  limit = 16;
 
   constructor(private ProductService: ProductService, private route: ActivatedRoute, private router: Router) { 
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -99,6 +99,31 @@ export class ListProductsComponent implements OnInit {
     }
   }
 
+  getLowestPrice(variations: any): number{
+    var lowest = variations[0].price;
+    for(let variation of variations){
+      lowest = Math.min(variation.price, lowest);
+    }
+
+    return lowest;
+  }
+
+  changeSelected(selected: any, product: any){
+    for(let currProduct of this.products){
+      if(currProduct === product){
+        product['selected'] = selected;
+      }
+    }
+  }
+
+  viewProduct(product: any){
+    console.log(product);
+    if(product.selected){
+      this.router.navigate(['/product/view/' +  product._id + "/" + product.selected._id]);
+    } else {
+      this.router.navigate(['/product/view/' +  product._id + "/" + product.productVariations[0]._id]);
+    }
+  }
 
 
 }

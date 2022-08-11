@@ -6,9 +6,8 @@ const productSchema = new Schema({
   name: String,
   tag: [{ type: String }],
   description: String,
-  images: [{ type: String}],
-  price: Number, 
-  stockAmount: Number
+  productVariations: [{ type: Schema.Types.ObjectId, ref: 'ProductVariation' }] 
+  
 });
 
 module.exports = mongoose.model("Product", productSchema);

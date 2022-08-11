@@ -2,7 +2,7 @@ import { CartService } from './../../shared/services/cart.service';
 import { Product } from 'puppeteer';
 import { ProductService } from './../../shared/services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { slideInLeftOnEnterAnimation } from 'angular-animations';
 
@@ -17,12 +17,22 @@ import { slideInLeftOnEnterAnimation } from 'angular-animations';
 export class ViewProductComponent implements OnInit {
 
   product!: any;
+  variationSelected!: any;
   imageSelected!: any;
-  constructor(private ProductService: ProductService, private route: ActivatedRoute, public CartService: CartService) {
+  constructor(private ProductService: ProductService, private router: Router, private route: ActivatedRoute, public CartService: CartService) {
+    this.route.snapshot.paramMap.get('variation');
+
     this.ProductService.findProductById(this.route.snapshot.paramMap.get('productId')).subscribe((product: any) => {
       this.product = product;
-      this.imageSelected =  this.product.images[0];
+      for(let variation of this.product.productVariations){
+        if(variation._id ===  this.route.snapshot.paramMap.get('variation')){
+          this.variationSelected = variation;
+          this.imageSelected = variation.images[0];
+        }
+      }
     })
+
+
   }
 
   ngOnInit(): void {
@@ -30,6 +40,10 @@ export class ViewProductComponent implements OnInit {
 
   selectImage(image: any){
     this.imageSelected = image;
+  }
+
+  selectVariation(selected: any, product: any){
+    this.router.navigate(['product/view/' +  this.route.snapshot.paramMap.get('productId') + "/" + selected]);
   }
 
 }

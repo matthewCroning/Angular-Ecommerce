@@ -7,7 +7,7 @@ import { execPath } from 'process';
 const routes: Routes = [
 
   {
-    path: 'view/:productId',
+    path: 'view/:productId/:variation',
     component: ViewProductComponent,
   },
   {

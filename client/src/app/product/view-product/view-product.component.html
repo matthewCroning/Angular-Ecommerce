@@ -1,28 +1,33 @@
 <br>
 
+<div class="row">    
 
+</div>
 <div class="container" *ngIf="product">
     <div class="row">
-        <div class="col-1">
-            <div class="overflow-auto h-100">
-                <ng-container *ngFor="let image of product.images">
-                    <img [ngClass]="{'border' : image === imageSelected}" class="img-fluid mb-3 p-1" src={{image}} alt="" (click)="selectImage(image)">
-                </ng-container>
+        <div class="col-6">
+            <div class="row">           
+                <div class="col-sm-12">
+                    <img [@enterSlideLeft]="imageSelected"  *ngFor="let imageSelected of [ imageSelected ]" class="img-fluid mb-3 border p-1" src={{imageSelected}} alt="">   
+                </div>
+                
+                <div class="row">
+                    <ng-container *ngFor="let variation of product.productVariations">
+                        <div class="col-3">
+                            <img src={{variation.images[0]}} (click)="selectVariation(variation._id, product)"  class="img-fluid h-50 mw-75" alt="..."  data-bs-toggle="tooltip" data-bs-placement="bottom" title={{variation.colour}}>                                     
+                        </div>
+                    </ng-container>
+                </div>
             </div>
         </div>
-        <div class="col-5">
-
-            
-            <img [@enterSlideLeft]="imageSelected"  *ngFor="let imageSelected of [ imageSelected ]" class="img-fluid mb-3 border p-1" src={{imageSelected}} alt="">
-        </div>
-        <div class="col-3">
+        <div class="col-sm-3">
             <h5> {{product.brand}} </h5>
-            <h5> {{product.name}} </h5>
+            <h5> {{product.name}} {{variationSelected.colour}} </h5>
             <p> {{product.description}} </p>
         </div>
-        <div class="col-3">
-            <h5> {{product.price  | currency:'AUD'}} </h5>
-            <button class="btn btn-outline-dark" [disabled]="product.stockAmount === 0 " [innerHtml]="product.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'" (click)="CartService.addToCart(product._id, 1)">
+        <div class="col-sm-3">
+            <h5> {{variationSelected.price  | currency}} </h5>
+            <button class="btn btn-outline-dark" [disabled]="variationSelected.stockAmount === 0 " [innerHtml]="variationSelected.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'" (click)="CartService.addToCart(product._id, 1)">
                 
             </button>
             

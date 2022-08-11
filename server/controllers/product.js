@@ -1,7 +1,7 @@
 var AsyncLock = require('async-lock');
 var lock = new AsyncLock();
 const Product = require("../models/product");
-
+const ProductVariation = require("../models/productVariation");
 exports.findAll = function(req, res, next){  
     Product.find({}, function(err, products) {
         if (!err) { 
@@ -24,7 +24,7 @@ exports.find = function(req, res, next){
     }
     search = { $regex: new RegExp(search, 'i') }
     console.log(search);
-    Product.find({$or:[{"brand": search},{"name": search }]}).limit(limit).skip(skip).sort([[sort, order]]).exec(function(err, products) {
+    Product.find({$or:[{"brand": search},{"name": search }]}).limit(limit).skip(skip).sort([[sort, order]]).populate({path: 'productVariations'}).exec(function(err, products) {
         if (!err) { 
             return res.json(products);
         } else {
@@ -41,7 +41,7 @@ exports.getCount = function(req, res, next){
 
 exports.findProductById = function(req, res, next){  
     var productId = req.params.productId; 
-    Product.findById(productId, function(err, product) {
+    Product.findById(productId).populate({path: 'productVariations'}).exec(function(err, product) {
         if (!err) { 
             return res.json(product);
         } else {

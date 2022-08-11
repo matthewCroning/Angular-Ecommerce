@@ -1,7 +1,7 @@
     <div class="container mt-3">   
         <div class="row mb-3">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2" [(ngModel)]="searchText">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2" [(ngModel)]="searchText" (keydown.enter)="goToPage(1)">
                 <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="goToPage(1)" [disabled]="searchText === ''"><i class="bi bi-search"></i></button>
               </div>
             <div class="col-3 offset-md-9">
@@ -17,13 +17,37 @@
         </div>
         <div class="row">
             
-            <ng-container *ngFor="let product of products; let i = index" >         
-                <div [@enterSlideLeft]="{ value: '', params: { delay: ((i * delay) + delay)} }" class="col-3 text-center"> 
-                    <span routerLink="/product/view/{{product._id}}">
-                        <img src={{product.images[0]}} class="img-fluid h-50 mw-100" alt="..."> 
-                        <h5> {{product.brand}} | {{product.price | currency}} </h5>
+            <ng-container *ngFor="let product of products; let i = index" >  
+                <div [@enterSlideLeft]="{ value: '', params: { delay: ((i * delay) + delay)} }" class="col-sm-3 text-center"> 
+                    <span (click)="viewProduct(product)">
+                        <ng-container *ngIf="product.selected">
+                            <img src={{product.selected.images[0]}} class="img-fluid h-50 mw-75" alt="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title={{product.productVariations[0].colour}}> 
+                        </ng-container>
+                        <ng-container *ngIf="!product.selected">
+                            <img src={{product.productVariations[0].images[0]}} class="img-fluid h-50 mw-75" alt="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title={{product.productVariations[0].colour}}> 
+                        </ng-container>
+                    </span> 
+                        <div class="row">
+                            <ng-container *ngIf="!product.selected">
+                                <ng-container *ngFor="let variation of product.productVariations; let j = index">
+                                    <!-- *ngIf="j > 0" -->
+                                <div  class="col-2">
+                                    <img src={{variation.images[0]}} (click)="changeSelected(variation, product)" (mouseenter)="changeSelected(variation, product)" class="img-fluid h-50 mw-75" alt="..."  data-bs-toggle="tooltip" data-bs-placement="bottom" title={{variation.colour}}>         
+                                </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="product.selected">
+                                <ng-container *ngFor="let variation of product.productVariations">
+                                    <!-- *ngIf="variation.images[0] != product.selected"  -->
+                                     <div  class="col-2">
+                                        <img  src={{variation.images[0]}} (click)="changeSelected(variation, product)" (mouseenter)="changeSelected(variation, product)" class="img-fluid h-50 mw-75" alt="..."  data-bs-toggle="tooltip" data-bs-placement="bottom" title={{variation.colour}}>         
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <h5> {{product.brand}} | {{ getLowestPrice(product.productVariations) | currency }} </h5>
                         <p> {{product.name}} </p>
-                    </span>  
+                    
                 </div>
             </ng-container>  
         </div>   
@@ -31,7 +55,7 @@
 
         <div class="row" *ngIf="products"  [@enterDown]>
             <div class="col-3">
-                <button class="btn btn-primary w-100" *ngIf="page > 1" (click)="goToPage(page - 1)">Previous</button>
+                <button class="btn btn-outline-secondary w-100" *ngIf="page > 1" (click)="goToPage(page - 1)">Previous</button>
             </div>
             <div class="col-6 text-center">
                 <ng-container *ngFor="let num of pages"> 
@@ -43,7 +67,7 @@
                 </ng-container>
             </div>
             <div class="col-3">
-                <button *ngIf="page * limit < productCount" class="btn btn-primary w-100" (click)="goToPage(page + 1)">Next</button>
+                <button *ngIf="page * limit < productCount" class="btn btn-outline-secondary w-100" (click)="goToPage(page + 1)">Next</button>
             </div>
         </div>
     </div>
