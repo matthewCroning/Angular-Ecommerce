@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateProductVariationComponent } from './create-product-variation/create-product-variation.component';
 
 
 @NgModule({
-  declarations: [CreateProductComponent],
+  declarations: [CreateProductComponent, CreateProductVariationComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

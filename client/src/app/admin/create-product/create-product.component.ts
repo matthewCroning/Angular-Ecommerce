@@ -29,13 +29,13 @@ export class CreateProductComponent implements OnInit {
       for (const field in this.productCreateForm.controls) {
         this.product[field] = this.productCreateForm.get(field).value   
       }
+      //change String of tags to array of tags
+      this.product.tags = this.product.tags.split(" ");
 
       this.AdminService.createProduct(this.product).subscribe((data: any) => {
         this.AlertService.sendAlert(data.message);
       })
-    }
-
-    
+    }    
   }
   
 

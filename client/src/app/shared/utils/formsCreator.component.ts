@@ -33,10 +33,18 @@ export class FormsCreator{
    return new FormGroup({
       name: new FormControl((''),Validators.required),
       description: new FormControl((''),Validators.required),
-      imageUrl: new FormControl((''),[Validators.required]),
-      price: new FormControl((''), [Validators.required]),
-      stockAmount: new FormControl((''), [Validators.required])
+      brand: new FormControl((''),[Validators.required]),
+      tags: new FormControl((''), [Validators.required]),
     })
   }
+
+  getProductVariationCreateForm(){
+    return new FormGroup({
+       price: new FormControl((''),Validators.required),
+       colour: new FormControl((''),Validators.required),
+       images: new FormControl((''),[Validators.required]),
+       stockAmount: new FormControl((''), [Validators.required]),
+     })
+   }
 
 }

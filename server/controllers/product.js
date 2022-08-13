@@ -24,7 +24,7 @@ exports.find = function(req, res, next){
     }
     search = { $regex: new RegExp(search, 'i') }
     console.log(search);
-    Product.find({$or:[{"brand": search},{"name": search }]}).limit(limit).skip(skip).sort([[sort, order]]).populate({path: 'productVariations'}).exec(function(err, products) {
+    Product.find({$or:[{"brand": search},{"name": search }]}).collation({locale: "en" }).limit(limit).skip(skip).sort([[sort, order]]).populate({path: 'productVariations'}).exec(function(err, products) {
         if (!err) { 
             return res.json(products);
         } else {
@@ -41,6 +41,7 @@ exports.getCount = function(req, res, next){
 
 exports.findProductById = function(req, res, next){  
     var productId = req.params.productId; 
+    console.log(productId);
     Product.findById(productId).populate({path: 'productVariations'}).exec(function(err, product) {
         if (!err) { 
             return res.json(product);
