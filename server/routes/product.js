@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../controllers/product");
+const Auth = require("../controllers/auth");
 
 router.get("/findAll", Product.findAll);
 router.get("/find/:limit/:page/:sort/:order/:search", Product.find);
@@ -14,6 +15,6 @@ router.get("/increaseStock/:productId", Product.increaseStock);
 
 
 
-router.post("/create", Product.create);
+router.post("/create", Auth.isAdmin, Product.create);
 
 module.exports = router;

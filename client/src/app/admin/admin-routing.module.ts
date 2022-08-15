@@ -1,3 +1,4 @@
+import { AdminComponent } from './admin/admin.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -5,11 +6,15 @@ import { CreateProductVariationComponent } from './create-product-variation/crea
 
 const routes: Routes = [
   {
+    path: '',
+    component: AdminComponent
+  },
+  {
     path: 'createProduct',
     component: CreateProductComponent
   },
   {
-    path: 'createProductVaruation',
+    path: 'createProductVariation',
     component: CreateProductVariationComponent
   },
   

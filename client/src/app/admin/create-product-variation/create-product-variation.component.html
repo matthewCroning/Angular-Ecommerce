@@ -1,1 +1,42 @@
-<p>create-product-variation works!</p>
+<div class="container">
+    
+    <form [formGroup]="productVariationCreateForm">
+        <h5> Contact Information </h5>
+     
+        <select class="form-select" aria-label="Default select example">
+            <option *ngFor="let product of products" value={{product._id}}>
+                {{product.brand}} - {{product.name}}
+            </option>
+        </select>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="name@example.com" formControlName="name" [class.is-invalid]="productVariationCreateForm.get('price')!.invalid &&productVariationCreateForm.get('price')!.touched">
+            <label for="name">Price</label>
+            <small *ngIf="productVariationCreateForm.get('price')!.invalid && productVariationCreateForm.get('price')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productVariationCreateForm.get('price'))}}</small>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="brand" placeholder="name@example.com" formControlName="brand" [class.is-invalid]="productVariationCreateForm.get('colour')!.invalid &&productVariationCreateForm.get('colour')!.touched">
+            <label for="name">Colour</label>
+            <small *ngIf="productVariationCreateForm.get('colour')!.invalid && productVariationCreateForm.get('colour')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productVariationCreateForm.get('colour'))}}</small>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="description" placeholder="name@example.com" formControlName="description" [class.is-invalid]="productVariationCreateForm.get('stockAmount')!.invalid &&productVariationCreateForm.get('stockAmount')!.touched">
+            <label for="name">Stock Amount</label>
+            <small *ngIf="productVariationCreateForm.get('stockAmount')!.invalid && productVariationCreateForm.get('stockAmount')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productVariationCreateForm.get('stockAmount'))}}</small>
+        </div>
+
+            
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="tags" placeholder="name@example.com" formControlName="tags" [class.is-invalid]="productVariationCreateForm.get('images')!.invalid &&productVariationCreateForm.get('stockAmount')!.touched">
+            <label for="name">Images (Seperate by space)</label>
+            <small *ngIf="productVariationCreateForm.get('images')!.invalid && productVariationCreateForm.get('images')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productVariationCreateForm.get('images'))}}</small>
+        </div>
+    
+        <button class="btn btn-outline-dark" (click)="createProductVariation()">
+            Create
+        </button>
+    </form>
+    
+    </div>
+    

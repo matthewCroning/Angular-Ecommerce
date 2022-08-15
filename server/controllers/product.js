@@ -40,15 +40,15 @@ exports.getCount = function(req, res, next){
 }
 
 exports.findProductById = function(req, res, next){  
-    var productId = req.params.productId; 
-    console.log(productId);
-    Product.findById(productId).populate({path: 'productVariations'}).exec(function(err, product) {
-        if (!err) { 
-            return res.json(product);
-        } else {
-            throw err;
-        }
-    });
+    // var productId = req.params.productId; 
+    // console.log(productId);
+    // Product.findById(productId).populate({path: 'productVariations'}).exec(function(err, product) {
+    //     if (!err) { 
+    //         return res.json(product);
+    //     } else {
+    //         throw err;
+    //     }
+    // });
 }
 
 exports.findProductsByIds = function(req, res, next){  

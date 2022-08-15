@@ -1,3 +1,5 @@
+import { Product } from 'puppeteer';
+import { ProductService } from './../../shared/services/product.service';
 import { AlertService } from './../../shared/services/alert.service';
 import { FormControlErrorUtil } from './../../shared/utils/form-control-error/form-control-error.component';
 import { FormsCreator } from './../../shared/utils/formsCreator.component';
@@ -15,10 +17,15 @@ export class CreateProductVariationComponent implements OnInit {
   public productVariationCreateForm!: any;
   productVariation: any = {};
   productId: any;
+  products: any;
   constructor(public AdminService: AdminService, 
     public FormsCreator: FormsCreator,
     public FormControlErrorUtil: FormControlErrorUtil,
-    public AlertService: AlertService) { 
+    public AlertService: AlertService,
+    public ProductService: ProductService) { 
+      this.ProductService.findAll().subscribe((products: any) => {
+        this.products = products;
+      })
     this.productVariationCreateForm = FormsCreator.getProductVariationCreateForm();
   }
 

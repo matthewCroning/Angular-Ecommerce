@@ -1,7 +1,9 @@
+import { AdminAuthGuard } from './shared/interceptor/adminAuth.guard';
 import { CartComponent } from './cart/cart.component';
 import { ListProductsComponent } from './product/list-products/list-products.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/interceptor/auth.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +20,7 @@ const routes: Routes = [
   },
   { 
     path: 'admin', 
+    canLoad:[AdminAuthGuard],
     loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule)
   },
   { 
@@ -28,6 +31,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AdminAuthGuard]
 })
 export class AppRoutingModule { }

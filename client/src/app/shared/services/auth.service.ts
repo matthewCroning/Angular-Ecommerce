@@ -18,6 +18,7 @@ export class AuthService {
   private username!: string; 
   private userId!: string;
   private token!: string;
+  private admin!: string;
 
   constructor(private http: HttpClient) {}
 
@@ -86,6 +87,14 @@ export class AuthService {
     if (this.userId) return this.userId;
 
     return this.userId = this.parseJwt(this.getToken()).userId;
+  }
+
+  public isAdmin(): boolean{
+    return this.parseJwt(this.getToken()).admin;
+  }
+
+  public getIsAdmin(): boolean{
+    return this.parseJwt(this.getToken()).admin;
   }
 
   public getAuthToken(): any {
