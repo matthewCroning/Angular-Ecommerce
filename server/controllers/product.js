@@ -63,12 +63,26 @@ exports.findProductsByIds = function(req, res, next){
     });
 }
 
-exports.create = function(req, res, next){
+exports.create = async function(req, res, next){
     var product = req.body.product;
-    console.log(product);
-    var newProduct = new Product(product);
-    newProduct.save();
+    var productVariation = req.body.productVariation;
+    
+    product.productVariations = [];
+    var newProduct = await new Product(product);
+    productVariation.product = newProduct._id;
+    var newProductVariation = await new ProductVariation(productVariation);
+    await newProduct.productVariations.push(newProductVariation);  
+    await newProduct.save();
+    await newProductVariation.save();
+    console.log(newProduct._id);
     return res.json({product: newProduct, message: "successfully created new product"});
+}
+
+exports.delete = async function(req, res, next){
+    productId = req.body.productId;
+    const doc = await Product.findOne({"_id": productId});
+    await doc.deleteOne();
+    return res.json("deleted");
 }
 
 exports.reduceStock = async function(req, res, next){

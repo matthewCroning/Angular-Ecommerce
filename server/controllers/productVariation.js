@@ -14,3 +14,11 @@ exports.create = async function(req, res, next){
     });
     
 }
+
+exports.delete = async function(req, res, next){
+    var productVariationId = req.body.productVariationId;
+
+    ProductVariation.deleteOne({"_id": productVariationId}).exec(async function(err, deleted){
+        return res.json(deleted);
+    });
+}

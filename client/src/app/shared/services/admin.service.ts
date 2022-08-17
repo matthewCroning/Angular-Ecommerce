@@ -8,8 +8,8 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  createProduct(product: any){
-    return this.http.post('/api/product/create', {product: product}); 
+  createProduct(product: any, productVariation: any){
+    return this.http.post('/api/product/create', {product: product, productVariation: productVariation}); 
   }
 
   createProductVariation(productVariation: any, productId: any){

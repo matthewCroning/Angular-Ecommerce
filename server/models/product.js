@@ -10,4 +10,10 @@ const productSchema = new Schema({
   
 });
 
+productSchema.pre('deleteOne',  { document: true, query: false}, function(next) {
+  console.log(this);
+  this.model('ProductVariation').deleteMany({ product: this }).exec();
+  next();
+});
+
 module.exports = mongoose.model("Product", productSchema);
