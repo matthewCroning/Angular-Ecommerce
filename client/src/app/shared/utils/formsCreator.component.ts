@@ -38,6 +38,15 @@ export class FormsCreator{
     })
   }
 
+  getProductEditForm(){
+    return new FormGroup({
+       name: new FormControl(('')),
+       description: new FormControl(('')),
+       brand: new FormControl(('')),
+       tags: new FormControl(('')),
+     })
+   }
+
   getProductVariationCreateForm(){
     return new FormGroup({
        price: new FormControl((''),Validators.required),

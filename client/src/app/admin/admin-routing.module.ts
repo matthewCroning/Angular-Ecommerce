@@ -1,3 +1,4 @@
+import { EditProductComponent } from './edit-product/edit-product.component';
 import { AdminComponent } from './admin/admin.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { NgModule } from '@angular/core';
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: 'createProductVariation',
     component: CreateProductVariationComponent
   },
+  {
+    path: 'editProduct',
+    component: EditProductComponent
+  }
   
 ];
 

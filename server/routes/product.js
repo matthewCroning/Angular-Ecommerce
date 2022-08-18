@@ -17,5 +17,9 @@ router.get("/increaseStock/:productId", Product.increaseStock);
 
 router.post("/create", Auth.isAdmin, Product.create);
 
+router.post("/edit/:productId", Product.edit);
+
 router.post("/delete", Product.delete);
+
+
 module.exports = router;

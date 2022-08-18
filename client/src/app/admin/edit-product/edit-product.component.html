@@ -1,0 +1,40 @@
+<div class="container">
+
+    <select class="form-select"[(ngModel)]="product" (change)="changeProduct()">
+        <option *ngFor="let productOption of products" [ngValue]="productOption">
+            {{productOption.brand}} - {{productOption.name}}
+        </option>
+    </select>
+    {{product | json}}
+    <form [formGroup]="productEditForm">   
+        <h5> Edit Product </h5>
+     
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="name@example.com" formControlName="name" [class.is-invalid]="productEditForm.get('name')!.invalid &&productEditForm.get('name')!.touched">
+            <label for="name">Product Name</label>
+            <small *ngIf="productEditForm.get('name')!.invalid && productEditForm.get('name')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productEditForm.get('name'))}}</small>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="brand" placeholder="name@example.com" formControlName="brand" [class.is-invalid]="productEditForm.get('brand')!.invalid &&productEditForm.get('brand')!.touched">
+            <label for="name">Brand</label>
+            <small *ngIf="productEditForm.get('brand')!.invalid && productEditForm.get('brand')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productEditForm.get('brand'))}}</small>
+        </div>
+    
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="tags" placeholder="name@example.com" formControlName="tags" [class.is-invalid]="productEditForm.get('tags')!.invalid &&productEditForm.get('tags')!.touched">
+            <label for="name">Tags (Seperate by space)</label>
+            <small *ngIf="productEditForm.get('tags')!.invalid && productEditForm.get('tags')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productEditForm.get('tags'))}}</small>
+        </div>
+    
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="description" placeholder="name@example.com" formControlName="description" [class.is-invalid]="productEditForm.get('description')!.invalid &&productEditForm.get('description')!.touched">
+            <label for="name">Description</label>
+            <small *ngIf="productEditForm.get('description')!.invalid && productEditForm.get('description')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productEditForm.get('description'))}}</small>
+        </div>
+       
+        <button class="btn btn-outline-dark" (click)="edit()">
+            Edit
+        </button>
+    </form>
+    
+</div>

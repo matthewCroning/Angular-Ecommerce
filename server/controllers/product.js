@@ -78,6 +78,29 @@ exports.create = async function(req, res, next){
     return res.json({product: newProduct, message: "successfully created new product"});
 }
 
+exports.edit = async function(req, res, next){
+    const entries = Object.keys(req.body.product)
+    const updates = {}
+
+    console.log(req.body);
+    console.log(req.params);
+    // constructing dynamic query
+    
+    for (let i = 0; i < entries.length; i++) {
+    updates[entries[i]] = Object.values(req.body.product)[i]
+    }
+
+    Product.updateOne({"_id": req.params.productId} , { $set: updates }).exec(function (err , success) {
+        if(err){
+            return res.json("error " + err);
+        } else {
+            console.log(success);
+            return res.json("success");
+        }
+    })
+}
+
+
 exports.delete = async function(req, res, next){
     productId = req.body.productId;
     const doc = await Product.findOne({"_id": productId});

@@ -16,4 +16,8 @@ export class AdminService {
     return this.http.post('/api/productVariation/create/' + productId, {productVariation: productVariation}); 
   }
 
+  editProduct(product: any, productId: any){
+    return this.http.post('/api/product/edit/' + productId, {product: product}); 
+  }
+
 }

@@ -7,16 +7,19 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateProductVariationComponent } from './create-product-variation/create-product-variation.component';
 import { AdminComponent } from './admin/admin.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 
 @NgModule({
-  declarations: [CreateProductComponent, CreateProductVariationComponent, AdminComponent],
+  declarations: [CreateProductComponent, CreateProductVariationComponent, AdminComponent, EditProductComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }
