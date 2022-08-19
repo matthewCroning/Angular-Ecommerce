@@ -38,7 +38,7 @@ export class EditProductComponent implements OnInit {
       this.product[field] = this.productEditForm.get(field).value   
     }
 
-    this.product.tag = this.productEditForm.get("tags").split(" ");
+    this.product.tag = this.productEditForm.get("tags").value.split(" ");
 
     this.AdminService.editProduct(this.product, this.product._id).subscribe((data: any) => {
       this.AlertService.sendAlert(data.message);

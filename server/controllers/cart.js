@@ -1,5 +1,6 @@
 const Cart = require("../models/cart");
 const Product = require("../models/product");
+const ProductVariation = require("../models/productVariation");
 var AsyncLock = require('async-lock');
 var lock = new AsyncLock();
 
@@ -13,40 +14,40 @@ exports.create = async function(req, res, next){
 exports.getCart = async function(req, res, next){
     console.log("get Cart");
     cartId = req.params.cartId;
-    Cart.findById(cartId).populate('cartItems.$*.product').exec(async function(err, cart) { 
+    Cart.findById(cartId).populate('cartItems.$*.productVariation').exec(async function(err, cart) { 
         return res.json(cart);
     });
 }
 
 exports.addProductToCart = async function(req, res, next){
     cartId = req.body.cartId;
-    productId = req.body.productId;
+    productVariationId = req.body.productVariationId;
     amount = req.body.amount;
     Cart.findById(cartId, async function(err, cart) { 
-        lock.acquire(productId, async function(done) { 
-            Product.findById(productId, async function(err, product) {
+        lock.acquire(productVariationId, async function(done) { 
+            ProductVariation.findById(productVariationId, async function(err, productVariation) {
                 if (!err) {
-                    if(product.stockAmount > 0){          
-                        if(product.stockAmount >= amount){
-                            product.stockAmount = product.stockAmount - amount;
+                    if(productVariation.stockAmount > 0){          
+                        if(productVariation.stockAmount >= amount){
+                            productVariation.stockAmount = productVariation.stockAmount - amount;
                         } else {
                             await done();
                             return res.json("failure not enough stock");
                         }
-                        await product.save();
-                        if(cart.cartItems.has(productId)){
-                            cart.cartItems.set(productId, {amount: cart.cartItems.get(productId).amount + amount, product: product});
+                        await productVariation.save();
+                        if(cart.cartItems.has(productVariationId)){
+                            cart.cartItems.set(productVariationId, {amount: cart.cartItems.get(productVariationId).amount + amount, productVariation: productVariation});
                         } else {
-                            cart.cartItems.set(productId, {amount: amount, product: product});
+                            cart.cartItems.set(productVariationId, {amount: amount, productVariation: productVariation});
                         }
                         cart.save();
                         console.log(cart);
                         await done();
-                        return res.json({cartItem : {amount: cart.cartItems.get(productId).amount, product: product}, status: "success"});
+                        return res.json({cartItem : {amount: cart.cartItems.get(productVariationId).amount, productVariation: productVariation}, status: "success"});
                     } else {
-                        console.log(product, "failed");
+                        console.log(productVariation, "failed");
                         await done();
-                        return res.json({cartItem : {amount: cart.cartItems.get(productId).amount, product: product}, status: "failed"});
+                        return res.json({cartItem : {amount: cart.cartItems.get(productVariationId).amount, productVariation: productVariation}, status: "failed"});
                     }
                 } else {
                     return res.json({status: "failed"});
@@ -58,27 +59,27 @@ exports.addProductToCart = async function(req, res, next){
 
 exports.removeProductFromCart = async function(req, res, next){
     cartId = req.body.cartId;
-    productId = req.body.productId;
+    productVariationId = req.body.productVariationId;
     amount = req.body.amount
     Cart.findById(cartId, async function(err, cart) { 
-            Product.findById(productId, async function(err, product) {
+            ProductVariation.findById(productVariationId, async function(err, productVariation) {
                 if (!err) {
                          
-                        if(cart.cartItems.has(productId)){
-                            product.stockAmount = product.stockAmount + amount;
-                            await product.save();
+                        if(cart.cartItems.has(productVariationId)){
+                            productVariation.stockAmount = productVariation.stockAmount + amount;
+                            await productVariation.save();
                             
-                            if(cart.cartItems.get(productId).amount - amount == 0){
-                                await cart.cartItems.delete(productId);    
+                            if(cart.cartItems.get(productVariationId).amount - amount == 0){
+                                await cart.cartItems.delete(productVariationId);    
                                 await cart.save();
                                 console.log(cart);
-                                return res.json({cartItem: {amount: 0, product: product}, status: "success"});       
+                                return res.json({cartItem: {amount: 0, productVariation: productVariation}, status: "success"});       
                             } else {
-                                await cart.cartItems.set(productId, {amount: cart.cartItems.get(productId).amount - amount, product: product});
+                                await cart.cartItems.set(productVariationId, {amount: cart.cartItems.get(productVariationId).amount - amount, productVariation: productVariation});
                             }
                             await cart.save();
                             console.log(cart);
-                            return res.json({cartItem: {amount: cart.cartItems.get(productId).amount, product: product}, status: "success"});       
+                            return res.json({cartItem: {amount: cart.cartItems.get(productVariationId).amount, productVariation: productVariation}, status: "success"});       
                     }
                 } else {
                     return res.json({status: "failed"});
