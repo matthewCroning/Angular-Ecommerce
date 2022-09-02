@@ -1,3 +1,4 @@
+import { OrdersService } from './../../shared/services/orders.service';
 import { CartService } from './../../shared/services/cart.service';
 import { UserDetailsService } from './../../shared/services/user-details.service';
 import { Component, OnInit } from '@angular/core';
@@ -19,7 +20,7 @@ export class CartPaymentComponent implements OnInit {
   public paymentMethod: any;
   public billingAddress: boolean = false;
 
-  constructor(public UserDetailsService: UserDetailsService, public CartService: CartService) { }
+  constructor(public UserDetailsService: UserDetailsService, public CartService: CartService, public OrdersService: OrdersService) { }
 
   ngOnInit(): void {
   }

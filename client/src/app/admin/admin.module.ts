@@ -8,10 +8,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateProductVariationComponent } from './create-product-variation/create-product-variation.component';
 import { AdminComponent } from './admin/admin.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { ViewOrdersComponent } from './view-orders/view-orders.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
-  declarations: [CreateProductComponent, CreateProductVariationComponent, AdminComponent, EditProductComponent],
+  declarations: [CreateProductComponent, CreateProductVariationComponent, AdminComponent, EditProductComponent, ViewOrdersComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

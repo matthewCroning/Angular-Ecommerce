@@ -6,21 +6,24 @@
     <div class="row">
         <div class="col-9">
             <div class="container mt-3">
+                {{ CartService.getCart().cartItems | json }}
                 <ng-container *ngFor="let item of CartService.getCart().cartItems | keyvalue">
                     <div class="row">
                         <div class="col-2">    
-                            <img [src]="$any(item.value).product.imageUrl" class="img-fluid" alt="..."> 
+                            <img [src]="$any(item.value).productVariation.images[0]" class="img-fluid" alt="..."> 
                         </div>
                         <div class="col-9">
-                            Product: <a routerLink="/product/view/{{ $any(item.value).product._id}}">{{ $any(item.value).product.name }}</a>
+                            Product: <a > {{ $any(item.value).product.brand }} {{ $any(item.value).product.name }}</a>
                             <p>
                             Amount:
-                            <button class="btn btn-sm btn-outline-dark" (click)="CartService.removeFromCart( $any(item.value).product._id, 1)">-</button>
+                            <button class="btn btn-sm btn-outline-dark" (click)="CartService.removeFromCart( $any(item.value).product._id, $any(item.value).productVariation._id, 1)">-</button>
                             {{ $any(item.value).amount }}
-                            <button class="btn btn-sm btn-outline-dark" (click)="CartService.addToCart( $any(item.value).product._id , 1)">+</button>
+                            <button class="btn btn-outline-dark" [disabled]="$any(item.value).productVariation.stockAmount === 0 " [disabled]="$any(item.value).productVariation.stockAmount === 0 " (click)="CartService.addToCart($any(item.value).product._id, $any(item.value).productVariation._id, 1)">
+                                +
+                            </button>
                             </p>
-                            <p>Price: {{ $any(item.value).product.price | currency:'AUD'}} </p> 
-                            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart( $any(item.value).product._id,  $any(item.value).amount)">remove</button>
+                            <p>Price: {{ $any(item.value).productVariation.price | currency:'AUD'}} </p> 
+                            <button class="btn btn-sm btn-outline-danger" (click)="CartService.removeFromCart( $any(item.value).product._id, $any(item.value).productVariation._id,  $any(item.value).amount)">remove</button>
                         </div>
                     </div>    
                 </ng-container>    
@@ -52,12 +55,6 @@
 
         <br>
 
-
-<div class="row mt-3">
-    <div class="col offset-md-11">
-        <button class="btn btn-outline-dark btn-lg" routerLink="/cart/delivery">Checkout</button>
-    </div>
-</div>
 
 
 

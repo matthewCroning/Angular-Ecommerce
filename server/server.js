@@ -8,12 +8,14 @@ const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 const productVariationRoutes = require("./routes/productVariation");
 const cartRoutes = require("./routes/cart");
+const orderRoutes = require("./routes/order");
 
 const PORT = process.env.PORT || '3001';
 
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes),
 app.use("/api/cart", cartRoutes),
+app.use("/api/order", orderRoutes),
 app.use("/api/product", productRoutes),
 app.use("/api/productVariation", productVariationRoutes);
 

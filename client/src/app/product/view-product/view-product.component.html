@@ -27,7 +27,7 @@
         </div>
         <div class="col-sm-3">
             <h5> {{variationSelected.price  | currency}} </h5>
-            <button class="btn btn-outline-dark" [disabled]="variationSelected.stockAmount === 0 " [innerHtml]="variationSelected.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'" (click)="CartService.addToCart(product._id, 1)">
+            <button class="btn btn-outline-dark" [disabled]="variationSelected.stockAmount === 0 " [innerHtml]="variationSelected.stockAmount > 0 ? 'Add To Cart' : 'Out Of Stock'" (click)="CartService.addToCart(product._id, variationSelected._id, 1)">
                 
             </button>
             

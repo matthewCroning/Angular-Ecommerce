@@ -8,6 +8,7 @@ import { timingSafeEqual } from 'crypto';
 })
 export class UserDetailsService {
 
+
   public userDetailsForm!: FormGroup;
   
   public shippingMethod!: any;
@@ -80,6 +81,17 @@ export class UserDetailsService {
 
    getShippingMethodString(){
      return this.shippingMethod;
+   }
+
+   getUserInformation(){
+    return{ firstName: this.deliveryDetailsForm.controls['firstName'].value,
+            lastName: this.deliveryDetailsForm.controls['lastName'].value,
+            email: this.deliveryDetailsForm.controls['email'].value,
+            phone: this.deliveryDetailsForm.controls['phone'].value,
+            deliveryAddress: this.getDeliveryString(),
+            deliveryType: this.shippingMethod,
+            payment: "04040404"
+    }       
    }
 
    getDeliveryString(){

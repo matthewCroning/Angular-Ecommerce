@@ -10,18 +10,21 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item" *ngIf="AuthService.isAdmin()">
+            <a class="nav-link" routerLink="/admin">Admin</a>        
+          </li>
           <li class="nav-item">
              <a class="nav-link" *ngIf="AuthService.isAuthenticated()" aria-current="page" (click)="AuthService.logout()">Logout</a>        
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-light position-relative" aria-current="page" routerLink="cart">
+            <a type="button" class="btn btn-light position-relative" aria-current="page" routerLink="/cart/view"  [class.disabled]="CartService.getCartItemsAmount() === 0 ? true : null">
               <i class="bi bi-bag"></i>
               <ng-container *ngIf="CartService.getCartItemsAmount() > 0">
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {{CartService.getCartItemsAmount()}}  
                 </span>
               </ng-container>
-            </button>
+            </a>
           </li>
           <li class="nav-item" *ngIf="!AuthService.isAuthenticated()">
             <a class="nav-link" routerLink="/auth/login">Login</a>

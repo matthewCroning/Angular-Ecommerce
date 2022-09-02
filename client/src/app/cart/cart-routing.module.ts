@@ -7,7 +7,7 @@ import { CartComponent } from './cart.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'view',
     component: CartComponent
   },
   {

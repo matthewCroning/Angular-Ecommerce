@@ -6,6 +6,7 @@ const cartSchema = new Schema({
         type: Map, 
         of: {
             amount: Number,
+            product: { type: Schema.Types.ObjectId, ref: 'Product' },
             productVariation: { type: Schema.Types.ObjectId, ref: 'ProductVariation' }     
         }
     },

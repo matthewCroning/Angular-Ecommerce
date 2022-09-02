@@ -168,7 +168,7 @@
 
             <div class="row mt-3 justify-content-end">
                 <div class="col">
-                    <button class="btn btn-outline-dark btn-lg" routerLink="/cart/payment">Complete Order</button>
+                    <button class="btn btn-outline-dark btn-lg" (click)="OrdersService.submitOrder()">Complete Order</button>
                 </div>
             </div>
         </div>

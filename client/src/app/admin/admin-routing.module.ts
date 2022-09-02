@@ -4,6 +4,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateProductVariationComponent } from './create-product-variation/create-product-variation.component';
+import { ViewOrdersComponent } from './view-orders/view-orders.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'editProduct',
     component: EditProductComponent
+  },
+  {
+    path: 'viewOrders/:status',
+    component: ViewOrdersComponent
   }
   
 ];
