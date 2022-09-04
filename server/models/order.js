@@ -7,6 +7,7 @@ const orderSchema = new Schema({
         product: { type: Schema.Types.ObjectId, ref: 'Product' },
         productVariation: { type: Schema.Types.ObjectId, ref: 'ProductVariation' }     
     }],
+    user: { type: Schema.Types.ObjectId, ref: 'User' },  
     orderTime: Date,
     status: String,
     totalPrice: Number,

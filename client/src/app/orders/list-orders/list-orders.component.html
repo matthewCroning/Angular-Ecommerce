@@ -1,0 +1,5 @@
+<ng-container *ngFor="let order of orders">
+    <a routerLink="/order/view/{{order._id}}">
+        {{ order | json }}
+    </a>
+</ng-container>

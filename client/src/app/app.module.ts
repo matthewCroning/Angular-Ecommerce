@@ -13,13 +13,17 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImgMagnifier } from 'ng-img-magnifier';
 import { TokenInterceptor } from './shared/interceptor/token.interceptor';
+import { ListOrdersComponent } from './orders/list-orders/list-orders.component';
+import { ViewOrderComponent } from './orders/view-order/view-order.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AlertComponent
+    AlertComponent,
+    ListOrdersComponent,
+    ViewOrderComponent
   ],
   imports: [
     BrowserModule,

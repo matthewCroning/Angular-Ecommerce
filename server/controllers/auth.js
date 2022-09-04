@@ -119,4 +119,12 @@ function parseToken(token) {
   return token;
 }
 
+exports.getUserId = function(token) {
+  if (token.includes('Bearer')) {
+    return jwt.decode(token.split(' ')[1], config.SECRET);
+  }
+
+  return token;
+}
+
 exports.parseToken = parseToken;

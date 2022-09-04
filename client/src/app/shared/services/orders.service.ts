@@ -15,6 +15,14 @@ export class OrdersService {
     return this.http.get('/api/order/findAll/' + status);
   }
 
+  findUserOrders(){
+    return this.http.get('/api/order/findOrdersByUser');  
+  }
+
+  findOrder(orderId: any){
+    return this.http.get('/api/order/findOrder/' + orderId);    
+  }
+
   submitOrder(){
     var userInfo = this.UserDetailsService.getUserInformation();
     this.http.post('/api/order/create', {cartId : this.CartService.getCartId(),
