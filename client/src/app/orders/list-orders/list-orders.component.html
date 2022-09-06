@@ -1,5 +1,27 @@
-<ng-container *ngFor="let order of orders">
-    <a routerLink="/order/view/{{order._id}}">
-        {{ order | json }}
-    </a>
-</ng-container>
+<div class="container mt-3">
+    <h1> My Orders </h1>
+    <div class="card mt-3" *ngFor="let order of orders">
+        <div class="card-header">
+            <a routerLink="/order/view/{{order._id}}">
+               ID: {{order._id}}
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="row border">
+                        <div class="col-4" *ngFor="let item of order.orderItems.slice(0,3)">
+                            <img  [src]="item.productVariation.images[0]" class="img-fluid m-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <p> Total Price {{ order.totalPrice | currency }} </p>
+                    <h5> Status : {{ order.status}} </h5>
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
+
+

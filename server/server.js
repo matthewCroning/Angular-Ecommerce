@@ -10,6 +10,15 @@ const productVariationRoutes = require("./routes/productVariation");
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/order");
 
+const upload = require('./middleware/file-upload');
+app.post('/api/v1/upload', upload.array('image'), (req, res) => {
+    var files = [];
+    console.log(req.files);
+    req.files.map(file => files.push(file.location));
+    res.send({ images: files });
+});
+
+
 const PORT = process.env.PORT || '3001';
 
 app.use(bodyParser.json());
@@ -18,7 +27,6 @@ app.use("/api/cart", cartRoutes),
 app.use("/api/order", orderRoutes),
 app.use("/api/product", productRoutes),
 app.use("/api/productVariation", productVariationRoutes);
-
 app.listen(PORT, function(){
 });
 

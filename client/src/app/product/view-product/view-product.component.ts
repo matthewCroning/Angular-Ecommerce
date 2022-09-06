@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { slideInLeftOnEnterAnimation } from 'angular-animations';
+import {Location} from '@angular/common'; 
 
 @Component({
   selector: 'app-view-product',
@@ -19,7 +20,7 @@ export class ViewProductComponent implements OnInit {
   product!: any;
   variationSelected!: any;
   imageSelected!: any;
-  constructor(private ProductService: ProductService, private router: Router, private route: ActivatedRoute, public CartService: CartService) {
+  constructor(private ProductService: ProductService, private router: Router, private route: ActivatedRoute, public CartService: CartService, private location: Location) {
     this.route.snapshot.paramMap.get('variation');
 
     this.ProductService.findProductById(this.route.snapshot.paramMap.get('productId')).subscribe((product: any) => {
@@ -43,7 +44,15 @@ export class ViewProductComponent implements OnInit {
   }
 
   selectVariation(selected: any, product: any){
-    this.router.navigate(['product/view/' +  this.route.snapshot.paramMap.get('productId') + "/" + selected]);
+    this.location.replaceState('product/view/' +  this.route.snapshot.paramMap.get('productId') + "/" + selected);
+    
+    for(let variation of this.product.productVariations){
+      if(variation._id ===  selected){
+        this.variationSelected = variation;
+        this.imageSelected = variation.images[0];
+      }
+    }
+  
   }
 
 }

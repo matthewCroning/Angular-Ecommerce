@@ -1,12 +1,10 @@
 <ng-container *ngFor="let order of orders">
     {{order.totalPrice | currency }} {{ order.orderTime | date }}
     {{ order.status }}
+<br>
+
+
+    <br>
     <br>
 
-    <ng-container *ngFor="let item of order.orderItems">
-        {{ item.product.brand }}
-        {{ item.product.name }}
-        {{ item.productVariation.colour }}
-        {{ item.productVariation.price | currency}}
-    </ng-container>
 </ng-container>

@@ -33,6 +33,20 @@
             <small *ngIf="productVariationCreateForm.get('images')!.invalid && productVariationCreateForm.get('images')!.touched" class="text-danger">{{ FormControlErrorUtil.returnError(productVariationCreateForm.get('images'))}}</small>
         </div>
     
+        <input  (change)="onImagePicked($event)" placeholder="Upload Image" type="file" id="files" name="files" multiple />
+        
+        <div class="row">
+            <div class="col-sm-2" *ngFor="let image of images.values()">
+                <div class="item">
+                    <span class="notify-badge" (click)="removeImage(image)">X</span>
+                    <img class="img-thumbnail img" src={{image}} alt="">
+                    {{image}}
+                </div>
+            </div>
+        </div>
+       
+        <button class="btn btn-primary" (click)="onImageUpload()">Upload Image</button>
+
         <button class="btn btn-outline-dark" (click)="createProductVariation()">
             Create
         </button>

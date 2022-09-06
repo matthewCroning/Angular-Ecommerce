@@ -17,7 +17,7 @@ exports.create = function(req, res, next){
 ;
     User.findById(user.userId).exec(function(err, foundUser) {
 
-        Cart.findById(cartId).populate('cartItems.$*.productVariation').exec( function(err, cart) {
+        Cart.findById(cartId).populate('cartItems.$*.productVariation').exec(async function(err, cart) {
             var items = [];
             var cartItems = cart.cartItems.toJSON();
             var totalPrice = 0;
@@ -27,12 +27,13 @@ exports.create = function(req, res, next){
                     product: cart.cartItems.get(key)['product'],
                     productVariation: cart.cartItems.get(key)['productVariation']
                 })
-                totalPrice = toalPrice + (cart.cartItems.get(key)['productVariation']['price']) * cart.cartItems.get(key)['amount'];
+                
+                totalPrice = totalPrice + (cart.cartItems.get(key)['productVariation']['price']) * cart.cartItems.get(key)['amount'];
             });
             var newOrder = new Order({orderTime: new Date(), status: "pending",  totalPrice: totalPrice, orderItems: items, firstName: firstName, lastName: lastName, email: email, phone: phone, payment: payment, deliveryAddress: deliveryAddress, deliveryType: deliveryType, user: foundUser});
             newOrder.save();
             cart.cartItems = {};
-            cart.save();
+            //cart.save();
             return res.json(cart);
         });
     });
@@ -68,7 +69,7 @@ exports.findOrdersByUser = function(req, res, next){
     const token = req.headers.authorization || '';
     user = Auth.parseToken(token);
 
-    Order.find({user: {_id: user.userId}}).exec(function(err, product) {
+    Order.find({user: {_id: user.userId}}).populate({path: 'orderItems.productVariation', options: {limit: 1} }).populate({path: 'orderItems.product', options: {limit: 1} }).exec(function(err, product) {
         if (!err) { 
             return res.json(product);
         } else {
@@ -81,7 +82,7 @@ exports.findOrder = function(req, res, next){
     const token = req.headers.authorization || '';
     user = Auth.parseToken(token);
     orderId = req.params.orderId
-    Order.findOne({_id : orderId, user: {_id: user.userId}}).exec(function(err, product) {
+    Order.findOne({_id : orderId, user: {_id: user.userId}}).populate({path: 'orderItems.productVariation'}).populate({path: 'orderItems.product'}).exec(function(err, product) {
         if (!err) { 
             return res.json(product);
         } else {

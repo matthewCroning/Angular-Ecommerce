@@ -1,3 +1,4 @@
+import { ImageFileService } from './../../shared/services/image-file.service';
 import { Product } from 'puppeteer';
 import { ProductService } from './../../shared/services/product.service';
 import { AlertService } from './../../shared/services/alert.service';
@@ -18,11 +19,15 @@ export class CreateProductVariationComponent implements OnInit {
   productVariation: any = {};
   productId: any;
   products: any;
+  imageObj: any = [];
+  imageForm!: FormData;
+  images = new Set();
   constructor(public AdminService: AdminService, 
     public FormsCreator: FormsCreator,
     public FormControlErrorUtil: FormControlErrorUtil,
     public AlertService: AlertService,
-    public ProductService: ProductService) { 
+    public ProductService: ProductService,
+    public ImageFileService: ImageFileService) { 
       this.ProductService.findAll().subscribe((products: any) => {
         this.products = products;
       })
@@ -44,6 +49,43 @@ export class CreateProductVariationComponent implements OnInit {
         this.AlertService.sendAlert(data.message);
       })
     }    
+  }
+
+  onImagePicked(event: Event): void {
+    let upload = event!.target! as HTMLInputElement;
+    this.imageObj = [];
+    console.log(upload!.files!.length);
+    for(var i = 0; i < upload!.files!.length; i++){
+      let FILE = upload?.files?.[i];
+      console.log(FILE);
+      this.imageObj.push(FILE);   
+    }     
+
+    this.imageForm = new FormData();
+    for(let image of this.imageObj){
+     this.imageForm.append('image', image);
+    }
+    console.log(this.imageObj);
+    console.log(this.imageForm);
+    this.onImageUpload();
+  }
+
+  onImageUpload() {
+   this.ImageFileService.imageUpload(this.imageForm).subscribe((images: any) => {
+    console.log(images);  
+    for(let image of images.images){
+        this.images.add(image);
+      }
+   });
+  }
+
+  removeImage(image: any){
+    this.images.delete(image);
+    image = image.split('/');
+    var fileName = image[image.length-1]
+    this.ImageFileService.deleteFromAWS(fileName).subscribe((data: any)=> {
+      console.log(data);
+    })
   }
 
 }
