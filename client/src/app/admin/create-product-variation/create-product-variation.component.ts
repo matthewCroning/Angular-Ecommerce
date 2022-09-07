@@ -22,6 +22,7 @@ export class CreateProductVariationComponent implements OnInit {
   imageObj: any = [];
   imageForm!: FormData;
   images = new Set();
+  imagesArray: any;
   constructor(public AdminService: AdminService, 
     public FormsCreator: FormsCreator,
     public FormControlErrorUtil: FormControlErrorUtil,
@@ -30,6 +31,7 @@ export class CreateProductVariationComponent implements OnInit {
     public ImageFileService: ImageFileService) { 
       this.ProductService.findAll().subscribe((products: any) => {
         this.products = products;
+        this.productId = this.products[0]._id;
       })
     this.productVariationCreateForm = FormsCreator.getProductVariationCreateForm();
   }
@@ -38,13 +40,19 @@ export class CreateProductVariationComponent implements OnInit {
   }
 
   createProductVariation(){
+    console.log(this.productVariationCreateForm.valid);
+    console.log(this.productVariationCreateForm.get('images').status);
+    console.log(this.productVariationCreateForm.get('price').status);
+    console.log(this.productVariationCreateForm.get('stockAmount').status);
+    console.log(this.productVariationCreateForm.get('colour').status);
+    
     if(this.productVariationCreateForm.valid){
       for (const field in this.productVariationCreateForm.controls) {
         this.productVariation[field] = this.productVariationCreateForm.get(field).value   
       }
       //change String of tags to array of tags
       this.productVariation.images = this.productVariation.images.split(" ");
-
+      console.log(this.productVariation.images);
       this.AdminService.createProductVariation(this.productVariation, this.productId).subscribe((data: any) => {
         this.AlertService.sendAlert(data.message);
       })
@@ -76,6 +84,9 @@ export class CreateProductVariationComponent implements OnInit {
     for(let image of images.images){
         this.images.add(image);
       }
+      this.productVariationCreateForm.controls['images'].setValue(Array.from(this.images).join(' '));
+      console.log(this.productVariationCreateForm.get('images').value);
+      this.imagesArray = Array.from(this.images); 
    });
   }
 
@@ -88,4 +99,7 @@ export class CreateProductVariationComponent implements OnInit {
     })
   }
 
+  changeProductId(event: any){
+    this.productId = event.target.value;
+  }
 }

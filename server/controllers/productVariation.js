@@ -45,6 +45,7 @@ exports.deleteFromAWS = deleteFromAWS;
 exports.create = async function(req, res, next){  
     var productId = req.params.productId;
     var productVariation = req.body.productVariation;
+    console.log(productId);
     await Product.findById(productId).exec(async function(err,product){
         newProductVariation = new ProductVariation(productVariation);
         await newProductVariation.save();
